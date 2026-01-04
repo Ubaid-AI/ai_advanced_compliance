@@ -1,0 +1,324 @@
+{
+ "charts": [],
+ "content": "[{\"id\": \"header_main\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\\\\\"h4\\\\\\\"><b>Advanced Compliance</b></span>\", \"col\": 12}}, {\"id\": \"shortcuts_ask\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Ask Compliance\", \"col\": 3}}, {\"id\": \"shortcuts_section\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Control Activity\", \"col\": 3}}, {\"id\": \"shortcuts_section2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Risk Register Entry\", \"col\": 3}}, {\"id\": \"shortcuts_section3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Test Execution\", \"col\": 3}}, {\"id\": \"shortcuts_section4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Deficiency\", \"col\": 3}}, {\"id\": \"shortcuts_section5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Control Evidence\", \"col\": 3}}, {\"id\": \"shortcuts_section6\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Compliance Alert\", \"col\": 3}}, {\"id\": \"shortcuts_section7\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Graph Explorer\", \"col\": 3}}, {\"id\": \"shortcuts_section8\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Settings\", \"col\": 3}}, {\"id\": \"shortcuts_risk_prediction\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Risk Prediction\", \"col\": 3}}, {\"id\": \"shortcuts_nl_query\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"NL Query Log\", \"col\": 3}}, {\"id\": \"shortcuts_evidence_rule\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Evidence Capture Rule\", \"col\": 3}}]",
+ "creation": "2024-12-29 12:00:00",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "quality",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Advanced Compliance",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Controls & Testing",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Control Activity",
+   "link_count": 0,
+   "link_to": "Control Activity",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Test Execution",
+   "link_count": 0,
+   "link_to": "Test Execution",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Deficiency",
+   "link_count": 0,
+   "link_to": "Deficiency",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Control Evidence",
+   "link_count": 0,
+   "link_to": "Control Evidence",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Risk Management",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Risk Register Entry",
+   "link_count": 0,
+   "link_to": "Risk Register Entry",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Risk Category",
+   "link_count": 0,
+   "link_to": "Risk Category",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "COSO Principle",
+   "link_count": 0,
+   "link_to": "COSO Principle",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "AI Intelligence",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Compliance Alert",
+   "link_count": 0,
+   "link_to": "Compliance Alert",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Risk Prediction",
+   "link_count": 0,
+   "link_to": "Risk Prediction",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "NL Query Log",
+   "link_count": 0,
+   "link_to": "NL Query Log",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Knowledge Graph",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Graph Explorer",
+   "link_count": 0,
+   "link_to": "graph-explorer",
+   "link_type": "Page",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Graph Entity",
+   "link_count": 0,
+   "link_to": "Compliance Graph Entity",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Graph Relationship",
+   "link_count": 0,
+   "link_to": "Compliance Graph Relationship",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Settings & Configuration",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Compliance Settings",
+   "link_count": 0,
+   "link_to": "Compliance Settings",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "AI Provider Settings",
+   "link_count": 0,
+   "link_to": "AI Provider Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Control Category",
+   "link_count": 0,
+   "link_to": "Control Category",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Evidence Capture Rule",
+   "link_count": 0,
+   "link_to": "Evidence Capture Rule",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-01-02 07:06:37.290595",
+ "modified_by": "Administrator",
+ "module": "Advanced Compliance",
+ "name": "Advanced Compliance",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "restrict_to_domain": "",
+ "roles": [],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Control Activity",
+   "link_to": "Control Activity",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Risk Register Entry",
+   "link_to": "Risk Register Entry",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Test Execution",
+   "link_to": "Test Execution",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "Deficiency",
+   "link_to": "Deficiency",
+   "type": "DocType"
+  },
+  {
+   "color": "Purple",
+   "doc_view": "List",
+   "label": "Control Evidence",
+   "link_to": "Control Evidence",
+   "type": "DocType"
+  },
+  {
+   "color": "Pink",
+   "doc_view": "List",
+   "label": "Compliance Alert",
+   "link_to": "Compliance Alert",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "label": "Graph Explorer",
+   "link_to": "graph-explorer",
+   "type": "Page"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "label": "Settings",
+   "link_to": "Compliance Settings",
+   "type": "DocType"
+  },
+  {
+   "color": "Yellow",
+   "doc_view": "",
+   "label": "Ask Compliance",
+   "link_to": "ask-compliance",
+   "type": "Page"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "Risk Prediction",
+   "link_to": "Risk Prediction",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "NL Query Log",
+   "link_to": "NL Query Log",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Evidence Capture Rule",
+   "link_to": "Evidence Capture Rule",
+   "type": "DocType"
+  }
+ ],
+ "title": "Advanced Compliance"
+}

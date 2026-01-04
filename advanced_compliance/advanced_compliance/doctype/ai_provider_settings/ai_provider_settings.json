@@ -1,0 +1,200 @@
+{
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2024-12-30 16:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "ai_provider_info_section",
+        "ai_provider_status_html",
+        "features_section",
+        "enable_risk_prediction",
+        "enable_anomaly_detection",
+        "column_break_features",
+        "enable_nl_queries",
+        "enable_semantic_search",
+        "enable_suggestions",
+        "thresholds_section",
+        "high_risk_threshold",
+        "critical_risk_threshold",
+        "column_break_thresholds",
+        "anomaly_sensitivity",
+        "prediction_frequency",
+        "no_test_history_penalty",
+        "embedding_section",
+        "embedding_model",
+        "embedding_dimension",
+        "column_break_embedding",
+        "auto_rebuild_embeddings",
+        "embedding_batch_size"
+    ],
+    "fields": [
+        {
+            "fieldname": "ai_provider_info_section",
+            "fieldtype": "Section Break",
+            "label": "AI Provider (from AI Assistant App)"
+        },
+        {
+            "fieldname": "ai_provider_status_html",
+            "fieldtype": "HTML",
+            "label": "AI Provider Status",
+            "options": "<div class=\"alert alert-info\">AI Provider settings are managed centrally via the <b>AI Assistant</b> app. <a href=\"/app/ai-provider\">Configure AI Provider</a></div>"
+        },
+        {
+            "fieldname": "features_section",
+            "fieldtype": "Section Break",
+            "label": "Feature Toggles"
+        },
+        {
+            "default": "1",
+            "description": "Enable ML-based control failure prediction",
+            "fieldname": "enable_risk_prediction",
+            "fieldtype": "Check",
+            "label": "Enable Risk Prediction"
+        },
+        {
+            "default": "1",
+            "description": "Enable detection of compliance pattern anomalies",
+            "fieldname": "enable_anomaly_detection",
+            "fieldtype": "Check",
+            "label": "Enable Anomaly Detection"
+        },
+        {
+            "fieldname": "column_break_features",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "0",
+            "description": "Enable natural language compliance queries (requires API key)",
+            "fieldname": "enable_nl_queries",
+            "fieldtype": "Check",
+            "label": "Enable NL Queries"
+        },
+        {
+            "default": "1",
+            "description": "Enable semantic similarity search",
+            "fieldname": "enable_semantic_search",
+            "fieldtype": "Check",
+            "label": "Enable Semantic Search"
+        },
+        {
+            "default": "1",
+            "description": "Enable intelligent auto-suggestions",
+            "fieldname": "enable_suggestions",
+            "fieldtype": "Check",
+            "label": "Enable Suggestions"
+        },
+        {
+            "fieldname": "thresholds_section",
+            "fieldtype": "Section Break",
+            "label": "Thresholds & Sensitivity"
+        },
+        {
+            "default": "0.6",
+            "description": "Failure probability threshold for High risk (0.0-1.0)",
+            "fieldname": "high_risk_threshold",
+            "fieldtype": "Float",
+            "label": "High Risk Threshold"
+        },
+        {
+            "default": "0.8",
+            "description": "Failure probability threshold for Critical risk (0.0-1.0)",
+            "fieldname": "critical_risk_threshold",
+            "fieldtype": "Float",
+            "label": "Critical Risk Threshold"
+        },
+        {
+            "fieldname": "column_break_thresholds",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "Medium",
+            "description": "Sensitivity level for anomaly detection",
+            "fieldname": "anomaly_sensitivity",
+            "fieldtype": "Select",
+            "label": "Anomaly Sensitivity",
+            "options": "Low\nMedium\nHigh"
+        },
+        {
+            "default": "Weekly",
+            "description": "How often to run bulk risk predictions",
+            "fieldname": "prediction_frequency",
+            "fieldtype": "Select",
+            "label": "Prediction Frequency",
+            "options": "Daily\nWeekly\nMonthly\nManual"
+        },
+        {
+            "default": "0.1",
+            "description": "Risk penalty (0.0 to 1.0) for controls with no test history",
+            "fieldname": "no_test_history_penalty",
+            "fieldtype": "Float",
+            "label": "No Test History Penalty"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "embedding_section",
+            "fieldtype": "Section Break",
+            "label": "Embedding Settings"
+        },
+        {
+            "default": "all-MiniLM-L6-v2",
+            "description": "Sentence transformer model for embeddings",
+            "fieldname": "embedding_model",
+            "fieldtype": "Data",
+            "label": "Embedding Model"
+        },
+        {
+            "default": "384",
+            "description": "Dimension of embedding vectors",
+            "fieldname": "embedding_dimension",
+            "fieldtype": "Int",
+            "label": "Embedding Dimension",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_embedding",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "1",
+            "description": "Automatically rebuild embeddings when documents change",
+            "fieldname": "auto_rebuild_embeddings",
+            "fieldtype": "Check",
+            "label": "Auto Rebuild Embeddings"
+        },
+        {
+            "default": "100",
+            "description": "Batch size for embedding generation",
+            "fieldname": "embedding_batch_size",
+            "fieldtype": "Int",
+            "label": "Embedding Batch Size"
+        }
+    ],
+    "index_web_pages_for_search": 0,
+    "issingle": 1,
+    "links": [],
+    "modified": "2026-01-02 16:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "AI Provider Settings",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
+}

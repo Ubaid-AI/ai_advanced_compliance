@@ -1,0 +1,386 @@
+{
+    "actions": [],
+    "allow_export": 1,
+    "allow_import": 1,
+    "allow_rename": 0,
+    "creation": "2024-12-29 12:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "naming_series",
+        "control_name",
+        "description",
+        "status",
+        "classification_section",
+        "control_category",
+        "control_type",
+        "column_break_class",
+        "automation_level",
+        "is_key_control",
+        "coso_section",
+        "coso_component",
+        "coso_principle",
+        "ownership_section",
+        "control_owner",
+        "control_performer",
+        "column_break_owner",
+        "backup_performer",
+        "department",
+        "company",
+        "frequency_section",
+        "frequency",
+        "timing",
+        "testing_section",
+        "test_frequency",
+        "last_test_date",
+        "column_break_test",
+        "last_test_result",
+        "next_test_date",
+        "ai_prediction_section",
+        "ai_risk_level",
+        "ai_failure_probability",
+        "column_break_ai",
+        "ai_prediction_date",
+        "ai_prediction_link",
+        "linkages_section",
+        "risks_addressed",
+        "procedure_section",
+        "control_procedure",
+        "evidence_requirements"
+    ],
+    "fields": [
+        {
+            "default": "CTRL-.YYYY.-.#####",
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "CTRL-.YYYY.-.#####",
+            "reqd": 1
+        },
+        {
+            "fieldname": "control_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Control Name",
+            "reqd": 1
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text Editor",
+            "label": "Description"
+        },
+        {
+            "default": "Draft",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Status",
+            "options": "Draft\nActive\nUnder Review\nDeprecated"
+        },
+        {
+            "fieldname": "classification_section",
+            "fieldtype": "Section Break",
+            "label": "Classification"
+        },
+        {
+            "fieldname": "control_category",
+            "fieldtype": "Link",
+            "in_standard_filter": 1,
+            "label": "Category",
+            "options": "Control Category"
+        },
+        {
+            "fieldname": "control_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Control Type",
+            "options": "\nPreventive\nDetective\nCorrective"
+        },
+        {
+            "fieldname": "column_break_class",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "automation_level",
+            "fieldtype": "Select",
+            "in_standard_filter": 1,
+            "label": "Automation Level",
+            "options": "\nManual\nSemi-automated\nFully Automated"
+        },
+        {
+            "default": "0",
+            "description": "Key controls require more frequent testing",
+            "fieldname": "is_key_control",
+            "fieldtype": "Check",
+            "label": "Key Control"
+        },
+        {
+            "fieldname": "coso_section",
+            "fieldtype": "Section Break",
+            "label": "COSO Framework Mapping"
+        },
+        {
+            "fieldname": "coso_component",
+            "fieldtype": "Select",
+            "label": "COSO Component",
+            "options": "\nControl Environment\nRisk Assessment\nControl Activities\nInformation and Communication\nMonitoring Activities"
+        },
+        {
+            "fieldname": "coso_principle",
+            "fieldtype": "Link",
+            "label": "COSO Principle",
+            "options": "COSO Principle"
+        },
+        {
+            "fieldname": "ownership_section",
+            "fieldtype": "Section Break",
+            "label": "Ownership & Responsibility"
+        },
+        {
+            "fieldname": "control_owner",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Control Owner",
+            "options": "User",
+            "reqd": 1
+        },
+        {
+            "fieldname": "control_performer",
+            "fieldtype": "Link",
+            "label": "Control Performer",
+            "options": "User"
+        },
+        {
+            "fieldname": "column_break_owner",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "backup_performer",
+            "fieldtype": "Link",
+            "label": "Backup Performer",
+            "options": "User"
+        },
+        {
+            "fieldname": "department",
+            "fieldtype": "Link",
+            "label": "Department",
+            "options": "Department"
+        },
+        {
+            "fieldname": "company",
+            "fieldtype": "Link",
+            "label": "Company",
+            "options": "Company"
+        },
+        {
+            "fieldname": "frequency_section",
+            "fieldtype": "Section Break",
+            "label": "Frequency & Timing"
+        },
+        {
+            "fieldname": "frequency",
+            "fieldtype": "Select",
+            "label": "Control Frequency",
+            "options": "\nContinuous\nDaily\nWeekly\nMonthly\nQuarterly\nAnnually\nEvent-driven"
+        },
+        {
+            "fieldname": "timing",
+            "fieldtype": "Select",
+            "label": "Timing",
+            "options": "\nReal-time\nEnd of Day\nEnd of Period\nOn Demand"
+        },
+        {
+            "fieldname": "testing_section",
+            "fieldtype": "Section Break",
+            "label": "Testing Information"
+        },
+        {
+            "fieldname": "test_frequency",
+            "fieldtype": "Select",
+            "label": "Test Frequency",
+            "options": "\nMonthly\nQuarterly\nSemi-annually\nAnnually"
+        },
+        {
+            "fieldname": "last_test_date",
+            "fieldtype": "Date",
+            "label": "Last Test Date",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_test",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "last_test_result",
+            "fieldtype": "Select",
+            "label": "Last Test Result",
+            "options": "\nEffective\nIneffective - Minor\nIneffective - Significant\nIneffective - Material\nNot Applicable\nNot Tested",
+            "read_only": 1
+        },
+        {
+            "fieldname": "next_test_date",
+            "fieldtype": "Date",
+            "label": "Next Test Due",
+            "read_only": 1
+        },
+        {
+            "fieldname": "ai_prediction_section",
+            "fieldtype": "Section Break",
+            "label": "AI Risk Prediction"
+        },
+        {
+            "description": "AI-predicted risk of control failure",
+            "fieldname": "ai_risk_level",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Predicted Risk Level",
+            "read_only": 1
+        },
+        {
+            "description": "Probability of failing next test (0-100%)",
+            "fieldname": "ai_failure_probability",
+            "fieldtype": "Percent",
+            "label": "Failure Probability",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_ai",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "ai_prediction_date",
+            "fieldtype": "Date",
+            "label": "Prediction Date",
+            "read_only": 1
+        },
+        {
+            "fieldname": "ai_prediction_link",
+            "fieldtype": "Link",
+            "label": "View Full Prediction",
+            "options": "Risk Prediction",
+            "read_only": 1
+        },
+        {
+            "fieldname": "linkages_section",
+            "fieldtype": "Section Break",
+            "label": "Risk Linkages"
+        },
+        {
+            "fieldname": "risks_addressed",
+            "fieldtype": "Table",
+            "label": "Risks Addressed",
+            "options": "Control Risk Link"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "procedure_section",
+            "fieldtype": "Section Break",
+            "label": "Control Procedure"
+        },
+        {
+            "fieldname": "control_procedure",
+            "fieldtype": "Text Editor",
+            "label": "Procedure Description"
+        },
+        {
+            "fieldname": "evidence_requirements",
+            "fieldtype": "Text Editor",
+            "label": "Evidence Requirements"
+        }
+    ],
+    "links": [
+        {
+            "group": "Testing",
+            "link_doctype": "Test Execution",
+            "link_fieldname": "control"
+        },
+        {
+            "group": "Deficiencies",
+            "link_doctype": "Deficiency",
+            "link_fieldname": "control"
+        },
+        {
+            "group": "Evidence",
+            "link_doctype": "Control Evidence",
+            "link_fieldname": "control_activity"
+        },
+        {
+            "group": "AI Predictions",
+            "link_doctype": "Risk Prediction",
+            "link_fieldname": "control"
+        }
+    ],
+    "modified": "2026-01-01 20:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Control Activity",
+    "naming_rule": "By \"Naming Series\" field",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "export": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "export": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "export": 1,
+            "read": 1,
+            "role": "Compliance Officer",
+            "write": 1
+        },
+        {
+            "export": 1,
+            "read": 1,
+            "role": "Internal Auditor"
+        },
+        {
+            "if_owner": 1,
+            "read": 1,
+            "role": "Control Owner",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Viewer"
+        }
+    ],
+    "search_fields": "control_name, control_owner",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [
+        {
+            "color": "Orange",
+            "title": "Draft"
+        },
+        {
+            "color": "Green",
+            "title": "Active"
+        },
+        {
+            "color": "Yellow",
+            "title": "Under Review"
+        },
+        {
+            "color": "Red",
+            "title": "Deprecated"
+        }
+    ],
+    "title_field": "control_name",
+    "track_changes": 1,
+    "track_views": 1
+}

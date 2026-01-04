@@ -1,0 +1,202 @@
+{
+    "actions": [],
+    "allow_import": 1,
+    "allow_rename": 0,
+    "creation": "2024-12-29 12:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "naming_series",
+        "control",
+        "control_name",
+        "test_execution",
+        "identification_section",
+        "severity",
+        "status",
+        "column_break_id",
+        "identified_date",
+        "identified_by",
+        "description_section",
+        "description",
+        "root_cause",
+        "remediation_section",
+        "remediation_plan",
+        "remediation_owner",
+        "column_break_rem",
+        "target_date",
+        "closure_date",
+        "closure_notes"
+    ],
+    "fields": [
+        {
+            "default": "DEF-.YYYY.-.#####",
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "DEF-.YYYY.-.#####",
+            "reqd": 1
+        },
+        {
+            "fieldname": "control",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Control",
+            "options": "Control Activity",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "control.control_name",
+            "fieldname": "control_name",
+            "fieldtype": "Data",
+            "label": "Control Name",
+            "read_only": 1
+        },
+        {
+            "fieldname": "test_execution",
+            "fieldtype": "Link",
+            "label": "Test Execution",
+            "options": "Test Execution"
+        },
+        {
+            "fieldname": "identification_section",
+            "fieldtype": "Section Break",
+            "label": "Identification"
+        },
+        {
+            "fieldname": "severity",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Severity",
+            "options": "Control Deficiency\nSignificant Deficiency\nMaterial Weakness",
+            "reqd": 1
+        },
+        {
+            "default": "Open",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Status",
+            "options": "Open\nIn Progress\nPending Validation\nClosed"
+        },
+        {
+            "fieldname": "column_break_id",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "Today",
+            "fieldname": "identified_date",
+            "fieldtype": "Date",
+            "label": "Identified Date"
+        },
+        {
+            "fieldname": "identified_by",
+            "fieldtype": "Link",
+            "label": "Identified By",
+            "options": "User"
+        },
+        {
+            "fieldname": "description_section",
+            "fieldtype": "Section Break",
+            "label": "Description"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text Editor",
+            "label": "Deficiency Description",
+            "reqd": 1
+        },
+        {
+            "fieldname": "root_cause",
+            "fieldtype": "Text Editor",
+            "label": "Root Cause Analysis"
+        },
+        {
+            "fieldname": "remediation_section",
+            "fieldtype": "Section Break",
+            "label": "Remediation"
+        },
+        {
+            "fieldname": "remediation_plan",
+            "fieldtype": "Text Editor",
+            "label": "Remediation Plan"
+        },
+        {
+            "fieldname": "remediation_owner",
+            "fieldtype": "Link",
+            "label": "Remediation Owner",
+            "options": "User"
+        },
+        {
+            "fieldname": "column_break_rem",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "target_date",
+            "fieldtype": "Date",
+            "label": "Target Remediation Date"
+        },
+        {
+            "fieldname": "closure_date",
+            "fieldtype": "Date",
+            "label": "Closure Date"
+        },
+        {
+            "fieldname": "closure_notes",
+            "fieldtype": "Text Editor",
+            "label": "Closure Notes"
+        }
+    ],
+    "links": [],
+    "modified": "2024-12-29 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Deficiency",
+    "naming_rule": "By \"Naming Series\" field",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Compliance Officer",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Internal Auditor",
+            "write": 1
+        },
+        {
+            "if_owner": 1,
+            "read": 1,
+            "role": "Control Owner"
+        },
+        {
+            "read": 1,
+            "role": "Compliance Viewer"
+        }
+    ],
+    "search_fields": "control, severity, status",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1,
+    "track_views": 1
+}

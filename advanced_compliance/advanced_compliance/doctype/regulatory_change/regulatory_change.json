@@ -1,0 +1,233 @@
+{
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2024-12-30 14:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "naming_series",
+        "regulatory_update",
+        "change_type",
+        "column_break_basic",
+        "severity",
+        "affected_section",
+        "status",
+        "summary_section",
+        "summary_of_change",
+        "change_details_section",
+        "old_text",
+        "new_text",
+        "analysis_section",
+        "text_similarity",
+        "semantic_similarity",
+        "column_break_analysis",
+        "obligation_changed",
+        "new_requirements",
+        "impact_section",
+        "affected_citations",
+        "impact_keywords"
+    ],
+    "fields": [
+        {
+            "default": "REGCHG-.YYYY.-.#####",
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "REGCHG-.YYYY.-.#####",
+            "reqd": 1
+        },
+        {
+            "fieldname": "regulatory_update",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Regulatory Update",
+            "options": "Regulatory Update",
+            "reqd": 1
+        },
+        {
+            "fieldname": "change_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Change Type",
+            "options": "\nNew Requirement\nAmendment\nClarification\nRemoval\nReorganization"
+        },
+        {
+            "fieldname": "column_break_basic",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "Moderate",
+            "fieldname": "severity",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Severity",
+            "options": "Critical\nMajor\nModerate\nMinor"
+        },
+        {
+            "description": "Which section of the regulation was changed",
+            "fieldname": "affected_section",
+            "fieldtype": "Data",
+            "label": "Affected Section"
+        },
+        {
+            "default": "Pending Analysis",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_standard_filter": 1,
+            "label": "Status",
+            "options": "Pending Analysis\nAnalyzed\nImpact Assessed\nResolved"
+        },
+        {
+            "fieldname": "summary_section",
+            "fieldtype": "Section Break",
+            "label": "Change Summary"
+        },
+        {
+            "fieldname": "summary_of_change",
+            "fieldtype": "Text",
+            "label": "Summary of Change"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "change_details_section",
+            "fieldtype": "Section Break",
+            "label": "Change Details"
+        },
+        {
+            "description": "Previous version text (if available)",
+            "fieldname": "old_text",
+            "fieldtype": "Long Text",
+            "label": "Old Text"
+        },
+        {
+            "description": "New version text",
+            "fieldname": "new_text",
+            "fieldtype": "Long Text",
+            "label": "New Text"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "analysis_section",
+            "fieldtype": "Section Break",
+            "label": "Change Analysis"
+        },
+        {
+            "description": "0-100%, how similar are the texts",
+            "fieldname": "text_similarity",
+            "fieldtype": "Percent",
+            "label": "Text Similarity",
+            "read_only": 1
+        },
+        {
+            "description": "0-100%, semantic meaning similarity",
+            "fieldname": "semantic_similarity",
+            "fieldtype": "Percent",
+            "label": "Semantic Similarity",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_analysis",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "0",
+            "description": "Did obligation level change (should → must)?",
+            "fieldname": "obligation_changed",
+            "fieldtype": "Check",
+            "label": "Obligation Changed"
+        },
+        {
+            "default": "0",
+            "description": "Are there new requirements not in previous version?",
+            "fieldname": "new_requirements",
+            "fieldtype": "Check",
+            "label": "New Requirements Added"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "impact_section",
+            "fieldtype": "Section Break",
+            "label": "Impact Mapping Data"
+        },
+        {
+            "description": "Citations affected by this change",
+            "fieldname": "affected_citations",
+            "fieldtype": "Small Text",
+            "label": "Affected Citations"
+        },
+        {
+            "description": "Keywords for control matching",
+            "fieldname": "impact_keywords",
+            "fieldtype": "Small Text",
+            "label": "Impact Keywords"
+        }
+    ],
+    "links": [
+        {
+            "group": "Impact",
+            "link_doctype": "Regulatory Impact Assessment",
+            "link_fieldname": "regulatory_change"
+        }
+    ],
+    "modified": "2024-12-30 14:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Regulatory Change",
+    "naming_rule": "By \"Naming Series\" field",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Compliance Officer",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Internal Auditor"
+        },
+        {
+            "read": 1,
+            "role": "Compliance Viewer"
+        }
+    ],
+    "search_fields": "regulatory_update, change_type, severity",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [
+        {
+            "color": "Orange",
+            "title": "Pending Analysis"
+        },
+        {
+            "color": "Blue",
+            "title": "Analyzed"
+        },
+        {
+            "color": "Yellow",
+            "title": "Impact Assessed"
+        },
+        {
+            "color": "Green",
+            "title": "Resolved"
+        }
+    ],
+    "track_changes": 1
+}

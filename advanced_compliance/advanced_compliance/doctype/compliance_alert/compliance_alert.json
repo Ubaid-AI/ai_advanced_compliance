@@ -1,0 +1,210 @@
+{
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2024-12-30 16:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "alert_type",
+        "severity",
+        "status",
+        "column_break_main",
+        "detected_at",
+        "resolved_at",
+        "resolved_by",
+        "details_section",
+        "title",
+        "description",
+        "reference_section",
+        "related_doctype",
+        "related_document",
+        "column_break_ref",
+        "related_field",
+        "related_value",
+        "detection_section",
+        "detection_rule",
+        "detection_details"
+    ],
+    "fields": [
+        {
+            "fieldname": "alert_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Alert Type",
+            "options": "Anomaly\nHigh Risk\nOverdue Test\nCoverage Gap\nOwnership Issue\nPattern Alert",
+            "reqd": 1
+        },
+        {
+            "fieldname": "severity",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Severity",
+            "options": "Info\nWarning\nCritical",
+            "reqd": 1
+        },
+        {
+            "default": "New",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Status",
+            "options": "New\nAcknowledged\nIn Progress\nResolved\nDismissed"
+        },
+        {
+            "fieldname": "column_break_main",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "Now",
+            "fieldname": "detected_at",
+            "fieldtype": "Datetime",
+            "in_list_view": 1,
+            "label": "Detected At",
+            "read_only": 1
+        },
+        {
+            "fieldname": "resolved_at",
+            "fieldtype": "Datetime",
+            "label": "Resolved At",
+            "read_only": 1
+        },
+        {
+            "fieldname": "resolved_by",
+            "fieldtype": "Link",
+            "label": "Resolved By",
+            "options": "User",
+            "read_only": 1
+        },
+        {
+            "fieldname": "details_section",
+            "fieldtype": "Section Break",
+            "label": "Alert Details"
+        },
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Title",
+            "reqd": 1
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text",
+            "label": "Description"
+        },
+        {
+            "fieldname": "reference_section",
+            "fieldtype": "Section Break",
+            "label": "Related Document"
+        },
+        {
+            "fieldname": "related_doctype",
+            "fieldtype": "Link",
+            "label": "Related DocType",
+            "options": "DocType"
+        },
+        {
+            "fieldname": "related_document",
+            "fieldtype": "Dynamic Link",
+            "label": "Related Document",
+            "options": "related_doctype"
+        },
+        {
+            "fieldname": "column_break_ref",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "related_field",
+            "fieldtype": "Data",
+            "label": "Related Field"
+        },
+        {
+            "fieldname": "related_value",
+            "fieldtype": "Data",
+            "label": "Related Value"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "detection_section",
+            "fieldtype": "Section Break",
+            "label": "Detection Details"
+        },
+        {
+            "description": "Rule or model that triggered this alert",
+            "fieldname": "detection_rule",
+            "fieldtype": "Data",
+            "label": "Detection Rule"
+        },
+        {
+            "description": "Additional detection details (JSON)",
+            "fieldname": "detection_details",
+            "fieldtype": "Code",
+            "label": "Detection Details",
+            "options": "JSON"
+        }
+    ],
+    "index_web_pages_for_search": 0,
+    "links": [],
+    "modified": "2024-12-30 16:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Compliance Alert",
+    "naming_rule": "Expression",
+    "autoname": "format:ALERT-{####}",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Officer",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Internal Auditor"
+        }
+    ],
+    "search_fields": "title, alert_type, severity, status",
+    "sort_field": "detected_at",
+    "sort_order": "DESC",
+    "states": [
+        {
+            "color": "Red",
+            "title": "New"
+        },
+        {
+            "color": "Orange",
+            "title": "Acknowledged"
+        },
+        {
+            "color": "Blue",
+            "title": "In Progress"
+        },
+        {
+            "color": "Green",
+            "title": "Resolved"
+        },
+        {
+            "color": "Gray",
+            "title": "Dismissed"
+        }
+    ],
+    "title_field": "title",
+    "track_changes": 1
+}

@@ -1,0 +1,185 @@
+{
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2024-12-30 16:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "control",
+        "control_name",
+        "prediction_date",
+        "column_break_main",
+        "failure_probability",
+        "risk_level",
+        "is_current",
+        "factors_section",
+        "contributing_factors",
+        "recommendations_section",
+        "recommended_actions",
+        "metadata_section",
+        "model_version",
+        "feature_values",
+        "column_break_meta",
+        "confidence_score",
+        "prediction_time_ms"
+    ],
+    "fields": [
+        {
+            "fieldname": "control",
+            "fieldtype": "Link",
+            "in_list_view": 0,
+            "in_standard_filter": 1,
+            "label": "Control Activity",
+            "options": "Control Activity",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "control.control_name",
+            "fieldname": "control_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Control Name",
+            "read_only": 1,
+            "bold": 1
+        },
+        {
+            "fieldname": "prediction_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Prediction Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_main",
+            "fieldtype": "Column Break"
+        },
+        {
+            "description": "Probability of control failure (0.0 to 1.0)",
+            "fieldname": "failure_probability",
+            "fieldtype": "Float",
+            "in_list_view": 1,
+            "label": "Failure Probability",
+            "precision": "4",
+            "reqd": 1
+        },
+        {
+            "fieldname": "risk_level",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Risk Level",
+            "options": "Low\nMedium\nHigh\nCritical"
+        },
+        {
+            "default": "1",
+            "description": "Is this the most recent prediction for this control?",
+            "fieldname": "is_current",
+            "fieldtype": "Check",
+            "in_standard_filter": 1,
+            "label": "Is Current"
+        },
+        {
+            "fieldname": "factors_section",
+            "fieldtype": "Section Break",
+            "label": "Contributing Factors"
+        },
+        {
+            "description": "Factors contributing to this prediction (JSON)",
+            "fieldname": "contributing_factors",
+            "fieldtype": "Code",
+            "label": "Contributing Factors",
+            "options": "JSON"
+        },
+        {
+            "fieldname": "recommendations_section",
+            "fieldtype": "Section Break",
+            "label": "Recommendations"
+        },
+        {
+            "description": "Recommended actions to mitigate risk (JSON array)",
+            "fieldname": "recommended_actions",
+            "fieldtype": "Code",
+            "label": "Recommended Actions",
+            "options": "JSON"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "metadata_section",
+            "fieldtype": "Section Break",
+            "label": "Model Metadata"
+        },
+        {
+            "fieldname": "model_version",
+            "fieldtype": "Data",
+            "label": "Model Version",
+            "read_only": 1
+        },
+        {
+            "description": "Feature values used for prediction (JSON)",
+            "fieldname": "feature_values",
+            "fieldtype": "Code",
+            "label": "Feature Values",
+            "options": "JSON",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_meta",
+            "fieldtype": "Column Break"
+        },
+        {
+            "description": "Model confidence in this prediction (0.0 to 1.0)",
+            "fieldname": "confidence_score",
+            "fieldtype": "Float",
+            "label": "Confidence Score",
+            "precision": "4",
+            "read_only": 1
+        },
+        {
+            "description": "Time taken for prediction in milliseconds",
+            "fieldname": "prediction_time_ms",
+            "fieldtype": "Int",
+            "hidden": 1,
+            "label": "Prediction Time (ms)",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 0,
+    "links": [],
+    "modified": "2024-12-30 16:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Risk Prediction",
+    "naming_rule": "Expression",
+    "autoname": "format:RP-{control}-{prediction_date}",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Officer"
+        },
+        {
+            "read": 1,
+            "role": "Internal Auditor"
+        }
+    ],
+    "search_fields": "control, control_name, risk_level",
+    "sort_field": "prediction_date",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 0
+}

@@ -1,0 +1,156 @@
+{
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2024-12-30 14:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "path_type",
+        "path_length",
+        "column_break_main",
+        "computed_at",
+        "is_valid",
+        "endpoints_section",
+        "start_entity",
+        "start_entity_type",
+        "column_break_endpoints",
+        "end_entity",
+        "end_entity_type",
+        "path_details_section",
+        "path_entities",
+        "path_relationships"
+    ],
+    "fields": [
+        {
+            "fieldname": "path_type",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Path Type",
+            "reqd": 1
+        },
+        {
+            "fieldname": "path_length",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "label": "Path Length",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_main",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "computed_at",
+            "fieldtype": "Datetime",
+            "label": "Computed At",
+            "read_only": 1
+        },
+        {
+            "default": "1",
+            "fieldname": "is_valid",
+            "fieldtype": "Check",
+            "in_standard_filter": 1,
+            "label": "Is Valid"
+        },
+        {
+            "fieldname": "endpoints_section",
+            "fieldtype": "Section Break",
+            "label": "Endpoints"
+        },
+        {
+            "fieldname": "start_entity",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Start Entity",
+            "options": "Compliance Graph Entity",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "start_entity.entity_type",
+            "fieldname": "start_entity_type",
+            "fieldtype": "Data",
+            "label": "Start Type",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_endpoints",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "end_entity",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "End Entity",
+            "options": "Compliance Graph Entity",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "end_entity.entity_type",
+            "fieldname": "end_entity_type",
+            "fieldtype": "Data",
+            "label": "End Type",
+            "read_only": 1
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "path_details_section",
+            "fieldtype": "Section Break",
+            "label": "Path Details"
+        },
+        {
+            "description": "Ordered list of entities in the path (JSON array)",
+            "fieldname": "path_entities",
+            "fieldtype": "Code",
+            "label": "Path Entities",
+            "options": "JSON",
+            "read_only": 1
+        },
+        {
+            "description": "Ordered list of relationships in the path (JSON array)",
+            "fieldname": "path_relationships",
+            "fieldtype": "Code",
+            "label": "Path Relationships",
+            "options": "JSON",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 0,
+    "links": [],
+    "modified": "2024-12-30 14:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Compliance Graph Path",
+    "naming_rule": "Expression",
+    "autoname": "format:GP-{path_type}-{####}",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Officer"
+        },
+        {
+            "read": 1,
+            "role": "Internal Auditor"
+        }
+    ],
+    "search_fields": "path_type, start_entity, end_entity",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 0
+}

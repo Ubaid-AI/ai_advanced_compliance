@@ -1,0 +1,196 @@
+{
+    "actions": [],
+    "allow_import": 1,
+    "allow_rename": 1,
+    "creation": "2024-12-30 12:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "rule_name",
+        "enabled",
+        "column_break_basic",
+        "control_activity",
+        "source_section",
+        "source_doctype",
+        "trigger_event",
+        "conditions_section",
+        "conditions",
+        "capture_section",
+        "capture_document_pdf",
+        "capture_workflow_history",
+        "column_break_capture",
+        "capture_version_history",
+        "capture_comments",
+        "linked_documents_section",
+        "linked_doctypes",
+        "retention_section",
+        "retention_period_years"
+    ],
+    "fields": [
+        {
+            "fieldname": "rule_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Rule Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "default": "1",
+            "fieldname": "enabled",
+            "fieldtype": "Check",
+            "in_list_view": 1,
+            "label": "Enabled"
+        },
+        {
+            "fieldname": "column_break_basic",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "control_activity",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Control Activity",
+            "options": "Control Activity",
+            "reqd": 1
+        },
+        {
+            "fieldname": "source_section",
+            "fieldtype": "Section Break",
+            "label": "Source Document"
+        },
+        {
+            "fieldname": "source_doctype",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Source DocType",
+            "options": "DocType",
+            "reqd": 1
+        },
+        {
+            "default": "on_submit",
+            "fieldname": "trigger_event",
+            "fieldtype": "Select",
+            "label": "Trigger Event",
+            "options": "on_submit\non_update\non_cancel",
+            "reqd": 1
+        },
+        {
+            "fieldname": "conditions_section",
+            "fieldtype": "Section Break",
+            "label": "Capture Conditions"
+        },
+        {
+            "description": "Define conditions that must be met for evidence to be captured. Leave empty to capture all documents of this type.",
+            "fieldname": "conditions",
+            "fieldtype": "Table",
+            "label": "Conditions",
+            "options": "Evidence Capture Condition"
+        },
+        {
+            "fieldname": "capture_section",
+            "fieldtype": "Section Break",
+            "label": "What to Capture"
+        },
+        {
+            "default": "1",
+            "fieldname": "capture_document_pdf",
+            "fieldtype": "Check",
+            "label": "Capture Document PDF"
+        },
+        {
+            "default": "1",
+            "fieldname": "capture_workflow_history",
+            "fieldtype": "Check",
+            "label": "Capture Workflow History"
+        },
+        {
+            "fieldname": "column_break_capture",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "1",
+            "fieldname": "capture_version_history",
+            "fieldtype": "Check",
+            "label": "Capture Version History"
+        },
+        {
+            "default": "1",
+            "fieldname": "capture_comments",
+            "fieldtype": "Check",
+            "label": "Capture Comments"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "linked_documents_section",
+            "fieldtype": "Section Break",
+            "label": "Linked Documents to Capture"
+        },
+        {
+            "description": "List DocTypes to automatically capture as linked evidence (e.g., Purchase Order, Payment Entry)",
+            "fieldname": "linked_doctypes",
+            "fieldtype": "Small Text",
+            "label": "Linked DocTypes"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "retention_section",
+            "fieldtype": "Section Break",
+            "label": "Retention"
+        },
+        {
+            "default": "7",
+            "fieldname": "retention_period_years",
+            "fieldtype": "Int",
+            "label": "Retention Period (Years)"
+        }
+    ],
+    "links": [
+        {
+            "group": "Evidence",
+            "link_doctype": "Control Evidence",
+            "link_fieldname": "capture_rule"
+        }
+    ],
+    "modified": "2024-12-30 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Evidence Capture Rule",
+    "naming_rule": "By fieldname",
+    "autoname": "field:rule_name",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Officer",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Internal Auditor"
+        }
+    ],
+    "search_fields": "rule_name, source_doctype, control_activity",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "title_field": "rule_name",
+    "track_changes": 1
+}

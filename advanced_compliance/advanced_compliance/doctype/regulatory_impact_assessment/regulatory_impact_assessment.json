@@ -1,0 +1,281 @@
+{
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2024-12-30 14:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "naming_series",
+        "regulatory_update",
+        "regulatory_change",
+        "column_break_source",
+        "control_activity",
+        "control_owner",
+        "status",
+        "mapping_section",
+        "mapping_method",
+        "confidence_score",
+        "column_break_mapping",
+        "matched_citations",
+        "matched_keywords",
+        "impact_section",
+        "impact_type",
+        "gap_identified",
+        "column_break_impact",
+        "priority",
+        "estimated_effort",
+        "action_section",
+        "recommended_action",
+        "action_taken",
+        "assignment_section",
+        "assigned_to",
+        "due_date",
+        "column_break_assignment",
+        "completed_date",
+        "completion_notes"
+    ],
+    "fields": [
+        {
+            "default": "REGIMP-.YYYY.-.#####",
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "REGIMP-.YYYY.-.#####",
+            "reqd": 1
+        },
+        {
+            "fieldname": "regulatory_update",
+            "fieldtype": "Link",
+            "in_standard_filter": 1,
+            "label": "Regulatory Update",
+            "options": "Regulatory Update"
+        },
+        {
+            "fieldname": "regulatory_change",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Regulatory Change",
+            "options": "Regulatory Change",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_source",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "control_activity",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Control Activity",
+            "options": "Control Activity",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "control_activity.control_owner",
+            "fieldname": "control_owner",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Control Owner",
+            "options": "User",
+            "read_only": 1
+        },
+        {
+            "default": "Pending",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Status",
+            "options": "Pending\nIn Progress\nControl Updated\nNo Action Needed\nDeferred"
+        },
+        {
+            "fieldname": "mapping_section",
+            "fieldtype": "Section Break",
+            "label": "Mapping Information"
+        },
+        {
+            "default": "Automatic",
+            "fieldname": "mapping_method",
+            "fieldtype": "Select",
+            "in_standard_filter": 1,
+            "label": "Mapping Method",
+            "options": "Automatic\nManual\nAI Suggested"
+        },
+        {
+            "description": "0-100%, confidence in the mapping",
+            "fieldname": "confidence_score",
+            "fieldtype": "Percent",
+            "in_list_view": 1,
+            "label": "Confidence Score"
+        },
+        {
+            "fieldname": "column_break_mapping",
+            "fieldtype": "Column Break"
+        },
+        {
+            "description": "Citations that triggered this match",
+            "fieldname": "matched_citations",
+            "fieldtype": "Small Text",
+            "label": "Matched Citations"
+        },
+        {
+            "description": "Keywords that triggered this match",
+            "fieldname": "matched_keywords",
+            "fieldtype": "Small Text",
+            "label": "Matched Keywords"
+        },
+        {
+            "fieldname": "impact_section",
+            "fieldtype": "Section Break",
+            "label": "Impact Assessment"
+        },
+        {
+            "fieldname": "impact_type",
+            "fieldtype": "Select",
+            "in_standard_filter": 1,
+            "label": "Impact Type",
+            "options": "\nReview Required\nModify Existing\nNew Control Needed\nRetire Control\nNo Impact"
+        },
+        {
+            "default": "0",
+            "fieldname": "gap_identified",
+            "fieldtype": "Check",
+            "label": "Gap Identified"
+        },
+        {
+            "fieldname": "column_break_impact",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "priority",
+            "fieldtype": "Select",
+            "in_standard_filter": 1,
+            "label": "Priority",
+            "options": "\nCritical\nHigh\nMedium\nLow"
+        },
+        {
+            "fieldname": "estimated_effort",
+            "fieldtype": "Select",
+            "label": "Estimated Effort",
+            "options": "\nMinimal (< 1 day)\nSmall (1-3 days)\nMedium (1-2 weeks)\nLarge (> 2 weeks)"
+        },
+        {
+            "fieldname": "action_section",
+            "fieldtype": "Section Break",
+            "label": "Action Items"
+        },
+        {
+            "fieldname": "recommended_action",
+            "fieldtype": "Text",
+            "label": "Recommended Action"
+        },
+        {
+            "fieldname": "action_taken",
+            "fieldtype": "Text",
+            "label": "Action Taken"
+        },
+        {
+            "fieldname": "assignment_section",
+            "fieldtype": "Section Break",
+            "label": "Assignment"
+        },
+        {
+            "fieldname": "assigned_to",
+            "fieldtype": "Link",
+            "in_standard_filter": 1,
+            "label": "Assigned To",
+            "options": "User"
+        },
+        {
+            "fieldname": "due_date",
+            "fieldtype": "Date",
+            "label": "Due Date"
+        },
+        {
+            "fieldname": "column_break_assignment",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "completed_date",
+            "fieldtype": "Date",
+            "label": "Completed Date",
+            "read_only": 1
+        },
+        {
+            "fieldname": "completion_notes",
+            "fieldtype": "Small Text",
+            "label": "Completion Notes"
+        }
+    ],
+    "links": [],
+    "modified": "2024-12-30 14:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Regulatory Impact Assessment",
+    "naming_rule": "By \"Naming Series\" field",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Compliance Officer",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Internal Auditor"
+        },
+        {
+            "if_owner": 1,
+            "read": 1,
+            "role": "Control Owner",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Viewer"
+        }
+    ],
+    "search_fields": "regulatory_change, control_activity, status",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [
+        {
+            "color": "Orange",
+            "title": "Pending"
+        },
+        {
+            "color": "Blue",
+            "title": "In Progress"
+        },
+        {
+            "color": "Green",
+            "title": "Control Updated"
+        },
+        {
+            "color": "Gray",
+            "title": "No Action Needed"
+        },
+        {
+            "color": "Yellow",
+            "title": "Deferred"
+        }
+    ],
+    "track_changes": 1
+}

@@ -1,0 +1,242 @@
+{
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2024-12-29 12:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "naming_series",
+        "control",
+        "control_name",
+        "test_period",
+        "execution_section",
+        "tester",
+        "test_date",
+        "column_break_exec",
+        "sample_size",
+        "population_size",
+        "procedure_section",
+        "test_procedure",
+        "results_section",
+        "test_result",
+        "exceptions_found",
+        "column_break_res",
+        "conclusion",
+        "evidence_section",
+        "evidence",
+        "review_section",
+        "reviewer",
+        "review_date",
+        "review_notes",
+        "amended_from"
+    ],
+    "fields": [
+        {
+            "default": "TEST-.YYYY.-.#####",
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "TEST-.YYYY.-.#####",
+            "reqd": 1
+        },
+        {
+            "fieldname": "control",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Control",
+            "options": "Control Activity",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "control.control_name",
+            "fieldname": "control_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Control Name",
+            "read_only": 1
+        },
+        {
+            "fieldname": "test_period",
+            "fieldtype": "Link",
+            "label": "Test Period",
+            "options": "Fiscal Year"
+        },
+        {
+            "fieldname": "execution_section",
+            "fieldtype": "Section Break",
+            "label": "Execution"
+        },
+        {
+            "fieldname": "tester",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Tester",
+            "options": "User",
+            "reqd": 1
+        },
+        {
+            "default": "Today",
+            "fieldname": "test_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Test Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_exec",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "sample_size",
+            "fieldtype": "Int",
+            "label": "Sample Size"
+        },
+        {
+            "fieldname": "population_size",
+            "fieldtype": "Int",
+            "label": "Population Size"
+        },
+        {
+            "fieldname": "procedure_section",
+            "fieldtype": "Section Break",
+            "label": "Test Procedure"
+        },
+        {
+            "fieldname": "test_procedure",
+            "fieldtype": "Text Editor",
+            "label": "Procedure Performed"
+        },
+        {
+            "fieldname": "results_section",
+            "fieldtype": "Section Break",
+            "label": "Results"
+        },
+        {
+            "fieldname": "test_result",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Test Result",
+            "options": "\nEffective\nIneffective - Minor\nIneffective - Significant\nIneffective - Material\nNot Applicable"
+        },
+        {
+            "default": "0",
+            "fieldname": "exceptions_found",
+            "fieldtype": "Int",
+            "label": "Exceptions Found"
+        },
+        {
+            "fieldname": "column_break_res",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "conclusion",
+            "fieldtype": "Text Editor",
+            "label": "Conclusion"
+        },
+        {
+            "fieldname": "evidence_section",
+            "fieldtype": "Section Break",
+            "label": "Evidence"
+        },
+        {
+            "fieldname": "evidence",
+            "fieldtype": "Table",
+            "label": "Evidence",
+            "options": "Test Evidence"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "review_section",
+            "fieldtype": "Section Break",
+            "label": "Review"
+        },
+        {
+            "fieldname": "reviewer",
+            "fieldtype": "Link",
+            "label": "Reviewer",
+            "options": "User"
+        },
+        {
+            "fieldname": "review_date",
+            "fieldtype": "Date",
+            "label": "Review Date"
+        },
+        {
+            "fieldname": "review_notes",
+            "fieldtype": "Text Editor",
+            "label": "Review Notes"
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Test Execution",
+            "print_hide": 1,
+            "read_only": 1
+        }
+    ],
+    "is_submittable": 1,
+    "links": [
+        {
+            "group": "Deficiencies",
+            "link_doctype": "Deficiency",
+            "link_fieldname": "test_execution"
+        }
+    ],
+    "modified": "2024-12-29 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Test Execution",
+    "naming_rule": "By \"Naming Series\" field",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "amend": 1,
+            "cancel": 1,
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "amend": 1,
+            "cancel": 1,
+            "create": 1,
+            "read": 1,
+            "role": "Internal Auditor",
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Officer"
+        },
+        {
+            "read": 1,
+            "role": "Control Owner"
+        },
+        {
+            "read": 1,
+            "role": "Compliance Viewer"
+        }
+    ],
+    "search_fields": "control, tester",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1,
+    "track_views": 1
+}

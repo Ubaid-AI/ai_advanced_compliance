@@ -1,0 +1,133 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - version-*
+  pull_request:
+
+concurrency:
+  group: develop-advanced_compliance-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  linter:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install ruff
+        run: pip install ruff
+
+      - name: Run Linter (ruff)
+        run: ruff check advanced_compliance/
+
+  tests:
+    name: Server Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    strategy:
+      fail-fast: false
+      matrix:
+        container: [1, 2]
+
+    services:
+      mariadb:
+        image: mariadb:10.6
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+
+      redis-cache:
+        image: redis:alpine
+        ports:
+          - 13000:6379
+
+      redis-queue:
+        image: redis:alpine
+        ports:
+          - 11000:6379
+
+      redis-socketio:
+        image: redis:alpine
+        ports:
+          - 12000:6379
+
+    steps:
+      - name: Clone
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          check-latest: true
+
+      - name: Add to Hosts
+        run: echo "127.0.0.1 test_site" | sudo tee -a /etc/hosts
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/*requirements*.txt', '**/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Get Frappe
+        run: |
+          git clone https://github.com/frappe/frappe --branch version-15 --depth 1
+
+      - name: Get ERPNext
+        run: |
+          git clone https://github.com/frappe/erpnext --branch version-15 --depth 1
+
+      - name: Setup Bench
+        run: |
+          pip install frappe-bench
+          bench init --skip-assets --frappe-path ~/work/advanced_compliance/advanced_compliance/frappe --python $(which python) frappe-bench
+
+      - name: Setup Test Environment
+        working-directory: /home/runner/work/advanced_compliance/advanced_compliance/frappe-bench
+        run: |
+          bench get-app erpnext ~/work/advanced_compliance/advanced_compliance/erpnext
+          bench get-app advanced_compliance $GITHUB_WORKSPACE
+          bench setup requirements --dev
+          bench new-site test_site --mariadb-root-password root --admin-password admin --no-mariadb-socket
+          bench --site test_site install-app erpnext
+          bench --site test_site install-app advanced_compliance
+        env:
+          CI: 'Yes'
+
+      - name: Run Tests
+        working-directory: /home/runner/work/advanced_compliance/advanced_compliance/frappe-bench
+        run: |
+          bench --site test_site set-config allow_tests true
+          bench --site test_site run-tests --app advanced_compliance --split ${{ matrix.container }}/2
+        env:
+          TYPE: server

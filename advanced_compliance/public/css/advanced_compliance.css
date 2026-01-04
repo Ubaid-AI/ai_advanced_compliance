@@ -1,0 +1,458 @@
+/*
+ * Advanced Compliance - Main Stylesheet
+ * Mobile-first responsive design
+ */
+
+/* ============================================
+   CSS Variables
+   ============================================ */
+:root {
+	--compliance-primary: #4A90D9;
+	--compliance-success: #28a745;
+	--compliance-warning: #ffc107;
+	--compliance-danger: #dc3545;
+	--compliance-info: #17a2b8;
+	--compliance-gray: #6c757d;
+
+	--card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	--card-radius: 8px;
+	--spacing-xs: 0.25rem;
+	--spacing-sm: 0.5rem;
+	--spacing-md: 1rem;
+	--spacing-lg: 1.5rem;
+	--spacing-xl: 2rem;
+}
+
+/* ============================================
+   Dashboard Layout
+   ============================================ */
+.compliance-dashboard {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: var(--spacing-md);
+	padding: var(--spacing-md);
+}
+
+.compliance-dashboard-wide {
+	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+/* ============================================
+   Cards
+   ============================================ */
+.compliance-card {
+	background: var(--card-bg);
+	border-radius: var(--card-radius);
+	padding: var(--spacing-lg);
+	box-shadow: var(--card-shadow);
+	transition: box-shadow 0.2s ease;
+}
+
+.compliance-card:hover {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.compliance-card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: var(--spacing-md);
+	padding-bottom: var(--spacing-sm);
+	border-bottom: 1px solid var(--border-color);
+}
+
+.compliance-card-title {
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--text-color);
+	margin: 0;
+}
+
+.compliance-card-value {
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--compliance-primary);
+}
+
+.compliance-card-label {
+	font-size: 0.875rem;
+	color: var(--text-muted);
+}
+
+/* ============================================
+   Statistics Grid
+   ============================================ */
+.compliance-stats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	gap: var(--spacing-md);
+}
+
+.compliance-stat {
+	text-align: center;
+	padding: var(--spacing-md);
+	background: var(--subtle-bg);
+	border-radius: var(--card-radius);
+}
+
+.compliance-stat-value {
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+.compliance-stat-label {
+	font-size: 0.75rem;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+/* ============================================
+   Risk Heatmap
+   ============================================ */
+.risk-heatmap {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.risk-heatmap table {
+	min-width: 400px;
+	border-collapse: collapse;
+}
+
+.risk-heatmap th,
+.risk-heatmap td {
+	padding: var(--spacing-sm);
+	text-align: center;
+	border: 1px solid var(--border-color);
+}
+
+.risk-heatmap th {
+	background: var(--subtle-bg);
+	font-weight: 600;
+}
+
+.risk-cell {
+	min-width: 60px;
+	min-height: 60px;
+	cursor: pointer;
+	transition: transform 0.1s ease;
+}
+
+.risk-cell:hover {
+	transform: scale(1.05);
+}
+
+.risk-cell.risk-critical { background: #dc3545; color: white; }
+.risk-cell.risk-high { background: #fd7e14; color: white; }
+.risk-cell.risk-medium { background: #ffc107; color: #333; }
+.risk-cell.risk-low { background: #28a745; color: white; }
+.risk-cell.risk-very-low { background: #6c757d; color: white; }
+
+/* ============================================
+   Status Badges
+   ============================================ */
+.compliance-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: var(--spacing-xs) var(--spacing-sm);
+	border-radius: 4px;
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+.compliance-badge.status-active,
+.compliance-badge.status-passed { background: #d4edda; color: #155724; }
+
+.compliance-badge.status-draft,
+.compliance-badge.status-pending { background: #e2e3e5; color: #383d41; }
+
+.compliance-badge.status-failed,
+.compliance-badge.status-critical { background: #f8d7da; color: #721c24; }
+
+.compliance-badge.status-warning,
+.compliance-badge.status-review { background: #fff3cd; color: #856404; }
+
+.compliance-badge.status-info { background: #cce5ff; color: #004085; }
+
+/* ============================================
+   Control List
+   ============================================ */
+.control-list-view .list-row {
+	padding: var(--spacing-md);
+	border-bottom: 1px solid var(--border-color);
+	transition: background-color 0.1s ease;
+}
+
+.control-list-view .list-row:hover {
+	background: var(--subtle-bg);
+}
+
+.control-key-indicator {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--compliance-warning);
+	margin-right: var(--spacing-xs);
+}
+
+/* ============================================
+   Graph Visualization
+   ============================================ */
+.graph-container {
+	width: 100%;
+	min-height: 400px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--card-radius);
+	touch-action: pan-x pan-y;
+	background: var(--subtle-bg);
+}
+
+.graph-controls {
+	display: flex;
+	gap: var(--spacing-sm);
+	padding: var(--spacing-sm);
+	border-bottom: 1px solid var(--border-color);
+	flex-wrap: wrap;
+}
+
+.graph-legend {
+	display: flex;
+	gap: var(--spacing-md);
+	padding: var(--spacing-sm);
+	flex-wrap: wrap;
+}
+
+.graph-legend-item {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-xs);
+	font-size: 0.875rem;
+}
+
+.graph-legend-color {
+	width: 12px;
+	height: 12px;
+	border-radius: 2px;
+}
+
+/* ============================================
+   Timeline / Regulatory Updates
+   ============================================ */
+.regulatory-timeline {
+	position: relative;
+	padding-left: var(--spacing-lg);
+}
+
+.regulatory-timeline::before {
+	content: '';
+	position: absolute;
+	left: 8px;
+	top: 0;
+	bottom: 0;
+	width: 2px;
+	background: var(--border-color);
+}
+
+.timeline-item {
+	position: relative;
+	padding-bottom: var(--spacing-lg);
+}
+
+.timeline-item::before {
+	content: '';
+	position: absolute;
+	left: calc(-1 * var(--spacing-lg) + 4px);
+	top: 4px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: var(--compliance-primary);
+	border: 2px solid white;
+}
+
+.timeline-item.urgent::before {
+	background: var(--compliance-danger);
+}
+
+.timeline-date {
+	font-size: 0.75rem;
+	color: var(--text-muted);
+	margin-bottom: var(--spacing-xs);
+}
+
+.timeline-title {
+	font-weight: 600;
+	margin-bottom: var(--spacing-xs);
+}
+
+.timeline-body {
+	font-size: 0.875rem;
+	color: var(--text-muted);
+}
+
+/* ============================================
+   Forms - Mobile Optimization
+   ============================================ */
+@media (max-width: 768px) {
+	.compliance-dashboard {
+		grid-template-columns: 1fr;
+		padding: var(--spacing-sm);
+	}
+
+	.compliance-card {
+		padding: var(--spacing-md);
+	}
+
+	.compliance-card-value {
+		font-size: 1.5rem;
+	}
+
+	.control-list-view .list-row {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.control-list-view .list-row-container {
+		flex-wrap: wrap;
+	}
+
+	.risk-heatmap {
+		font-size: 0.875rem;
+	}
+
+	.risk-cell {
+		min-width: 50px;
+		min-height: 50px;
+	}
+
+	.graph-container {
+		min-height: 300px;
+	}
+
+	.graph-controls {
+		flex-direction: column;
+	}
+
+	/* Larger touch targets */
+	.frappe-control {
+		min-height: 44px;
+	}
+
+	.btn {
+		min-height: 44px;
+		padding: 10px 16px;
+	}
+}
+
+@media (max-width: 480px) {
+	.compliance-stats {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.compliance-stat-value {
+		font-size: 1.25rem;
+	}
+
+	.graph-legend {
+		flex-direction: column;
+	}
+
+	.regulatory-timeline {
+		padding-left: var(--spacing-md);
+	}
+}
+
+/* ============================================
+   Dark Mode Support
+   ============================================ */
+[data-theme="dark"] {
+	--card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .compliance-badge.status-active,
+[data-theme="dark"] .compliance-badge.status-passed {
+	background: #1e4d2b;
+	color: #a3d9a5;
+}
+
+[data-theme="dark"] .compliance-badge.status-failed,
+[data-theme="dark"] .compliance-badge.status-critical {
+	background: #4d1f24;
+	color: #f5a6a6;
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+	.compliance-dashboard {
+		display: block;
+	}
+
+	.compliance-card {
+		page-break-inside: avoid;
+		margin-bottom: 1rem;
+		box-shadow: none;
+		border: 1px solid #ccc;
+	}
+
+	.graph-container {
+		display: none;
+	}
+
+	.no-print {
+		display: none !important;
+	}
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+.compliance-card:focus-within {
+	outline: 2px solid var(--compliance-primary);
+	outline-offset: 2px;
+}
+
+.risk-cell:focus {
+	outline: 2px solid var(--compliance-primary);
+	outline-offset: 2px;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+	position: absolute;
+	top: -40px;
+	left: 0;
+	background: var(--compliance-primary);
+	color: white;
+	padding: 8px;
+	z-index: 100;
+}
+
+.skip-link:focus {
+	top: 0;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+	.compliance-badge {
+		border: 2px solid currentColor;
+	}
+
+	.risk-cell {
+		border: 2px solid black;
+	}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	.compliance-card,
+	.risk-cell,
+	.control-list-view .list-row {
+		transition: none;
+	}
+}

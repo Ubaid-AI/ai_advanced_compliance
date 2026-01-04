@@ -1,0 +1,90 @@
+{
+    "actions": [],
+    "allow_import": 1,
+    "allow_rename": 0,
+    "creation": "2024-12-29 12:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "principle_number",
+        "component",
+        "title",
+        "description"
+    ],
+    "fields": [
+        {
+            "fieldname": "principle_number",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Principle Number",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "component",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "COSO Component",
+            "options": "Control Environment\nRisk Assessment\nControl Activities\nInformation and Communication\nMonitoring Activities",
+            "reqd": 1
+        },
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Principle Title",
+            "reqd": 1
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text",
+            "label": "Description"
+        }
+    ],
+    "links": [],
+    "modified": "2024-12-29 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "COSO Principle",
+    "naming_rule": "Set by user",
+    "autoname": "",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Officer"
+        },
+        {
+            "read": 1,
+            "role": "Internal Auditor"
+        },
+        {
+            "read": 1,
+            "role": "Control Owner"
+        },
+        {
+            "read": 1,
+            "role": "Compliance Viewer"
+        }
+    ],
+    "sort_field": "principle_number",
+    "sort_order": "ASC",
+    "states": [],
+    "track_changes": 1
+}

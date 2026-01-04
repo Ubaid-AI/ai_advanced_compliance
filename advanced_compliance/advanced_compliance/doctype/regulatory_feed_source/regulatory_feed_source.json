@@ -1,0 +1,195 @@
+{
+    "actions": [],
+    "allow_import": 1,
+    "allow_rename": 1,
+    "creation": "2024-12-30 14:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "source_name",
+        "feed_type",
+        "enabled",
+        "column_break_basic",
+        "regulatory_body",
+        "description",
+        "connection_section",
+        "url",
+        "api_key",
+        "user_agent",
+        "sync_section",
+        "sync_frequency",
+        "last_sync",
+        "column_break_sync",
+        "last_sync_status",
+        "last_error",
+        "filters_section",
+        "document_types",
+        "keywords"
+    ],
+    "fields": [
+        {
+            "fieldname": "source_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Source Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "feed_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Feed Type",
+            "options": "RSS\nSEC EDGAR\nPCAOB\nCustom API",
+            "reqd": 1
+        },
+        {
+            "default": "1",
+            "fieldname": "enabled",
+            "fieldtype": "Check",
+            "in_list_view": 1,
+            "label": "Enabled"
+        },
+        {
+            "fieldname": "column_break_basic",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "regulatory_body",
+            "fieldtype": "Select",
+            "in_standard_filter": 1,
+            "label": "Regulatory Body",
+            "options": "\nSEC\nPCAOB\nFASB\nIASB\nEU\nOther"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Small Text",
+            "label": "Description"
+        },
+        {
+            "fieldname": "connection_section",
+            "fieldtype": "Section Break",
+            "label": "Connection Settings"
+        },
+        {
+            "fieldname": "url",
+            "fieldtype": "Data",
+            "label": "Feed URL",
+            "options": "URL",
+            "reqd": 1
+        },
+        {
+            "fieldname": "api_key",
+            "fieldtype": "Password",
+            "label": "API Key"
+        },
+        {
+            "default": "AdvancedCompliance/1.0 (compliance@company.com)",
+            "description": "Required for SEC EDGAR API",
+            "fieldname": "user_agent",
+            "fieldtype": "Data",
+            "label": "User Agent"
+        },
+        {
+            "fieldname": "sync_section",
+            "fieldtype": "Section Break",
+            "label": "Sync Configuration"
+        },
+        {
+            "default": "Daily",
+            "fieldname": "sync_frequency",
+            "fieldtype": "Select",
+            "in_standard_filter": 1,
+            "label": "Sync Frequency",
+            "options": "Hourly\nDaily\nWeekly\nManual"
+        },
+        {
+            "fieldname": "last_sync",
+            "fieldtype": "Datetime",
+            "label": "Last Sync",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_sync",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "last_sync_status",
+            "fieldtype": "Select",
+            "label": "Last Sync Status",
+            "options": "\nSuccess\nFailed\nPartial",
+            "read_only": 1
+        },
+        {
+            "fieldname": "last_error",
+            "fieldtype": "Small Text",
+            "label": "Last Error",
+            "read_only": 1
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "filters_section",
+            "fieldtype": "Section Break",
+            "label": "Content Filters"
+        },
+        {
+            "description": "Comma-separated list of document types to include (e.g., Rule, Guidance, Release)",
+            "fieldname": "document_types",
+            "fieldtype": "Data",
+            "label": "Document Types Filter"
+        },
+        {
+            "fieldname": "keywords",
+            "fieldtype": "Table",
+            "label": "Keywords",
+            "options": "Regulatory Keyword"
+        }
+    ],
+    "links": [
+        {
+            "group": "Updates",
+            "link_doctype": "Regulatory Update",
+            "link_fieldname": "source"
+        }
+    ],
+    "modified": "2024-12-30 14:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Regulatory Feed Source",
+    "naming_rule": "By fieldname",
+    "autoname": "field:source_name",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Officer",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Viewer"
+        }
+    ],
+    "search_fields": "source_name, regulatory_body, feed_type",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "title_field": "source_name",
+    "track_changes": 1
+}

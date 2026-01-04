@@ -1,0 +1,206 @@
+{
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2024-12-30 12:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "naming_series",
+        "control_activity",
+        "capture_rule",
+        "column_break_header",
+        "captured_at",
+        "evidence_hash",
+        "source_section",
+        "source_doctype",
+        "source_name",
+        "column_break_source",
+        "source_owner",
+        "source_company",
+        "artifacts_section",
+        "document_snapshot",
+        "workflow_log",
+        "version_history",
+        "comments_log",
+        "linked_section",
+        "linked_documents",
+        "summary_section",
+        "evidence_summary"
+    ],
+    "fields": [
+        {
+            "default": "EVD-.YYYY.-.#####",
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "EVD-.YYYY.-.#####",
+            "reqd": 1
+        },
+        {
+            "fieldname": "control_activity",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Control Activity",
+            "options": "Control Activity",
+            "reqd": 1
+        },
+        {
+            "fieldname": "capture_rule",
+            "fieldtype": "Link",
+            "in_standard_filter": 1,
+            "label": "Capture Rule",
+            "options": "Evidence Capture Rule"
+        },
+        {
+            "fieldname": "column_break_header",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "captured_at",
+            "fieldtype": "Datetime",
+            "in_list_view": 1,
+            "label": "Captured At",
+            "read_only": 1
+        },
+        {
+            "description": "SHA-256 hash for tamper detection",
+            "fieldname": "evidence_hash",
+            "fieldtype": "Data",
+            "label": "Evidence Hash",
+            "read_only": 1
+        },
+        {
+            "fieldname": "source_section",
+            "fieldtype": "Section Break",
+            "label": "Source Document"
+        },
+        {
+            "fieldname": "source_doctype",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Source DocType",
+            "options": "DocType",
+            "read_only": 1
+        },
+        {
+            "fieldname": "source_name",
+            "fieldtype": "Dynamic Link",
+            "in_list_view": 1,
+            "label": "Source Document",
+            "options": "source_doctype",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_source",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "source_owner",
+            "fieldtype": "Link",
+            "label": "Document Owner",
+            "options": "User",
+            "read_only": 1
+        },
+        {
+            "fieldname": "source_company",
+            "fieldtype": "Link",
+            "label": "Company",
+            "options": "Company",
+            "read_only": 1
+        },
+        {
+            "fieldname": "artifacts_section",
+            "fieldtype": "Section Break",
+            "label": "Evidence Artifacts"
+        },
+        {
+            "fieldname": "document_snapshot",
+            "fieldtype": "Attach",
+            "label": "Document Snapshot (PDF)"
+        },
+        {
+            "fieldname": "workflow_log",
+            "fieldtype": "Code",
+            "label": "Workflow History",
+            "options": "JSON",
+            "read_only": 1
+        },
+        {
+            "fieldname": "version_history",
+            "fieldtype": "Code",
+            "label": "Version History",
+            "options": "JSON",
+            "read_only": 1
+        },
+        {
+            "fieldname": "comments_log",
+            "fieldtype": "Code",
+            "label": "Comments Log",
+            "options": "JSON",
+            "read_only": 1
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "linked_section",
+            "fieldtype": "Section Break",
+            "label": "Linked Documents"
+        },
+        {
+            "fieldname": "linked_documents",
+            "fieldtype": "Table",
+            "label": "Linked Documents",
+            "options": "Evidence Linked Document",
+            "read_only": 1
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "summary_section",
+            "fieldtype": "Section Break",
+            "label": "Evidence Summary"
+        },
+        {
+            "fieldname": "evidence_summary",
+            "fieldtype": "Text",
+            "label": "Summary",
+            "read_only": 1
+        }
+    ],
+    "links": [],
+    "modified": "2024-12-30 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Control Evidence",
+    "naming_rule": "By \"Naming Series\" field",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "read": 1,
+            "role": "System Manager"
+        },
+        {
+            "read": 1,
+            "role": "Compliance Admin"
+        },
+        {
+            "read": 1,
+            "role": "Compliance Officer"
+        },
+        {
+            "read": 1,
+            "role": "Internal Auditor"
+        },
+        {
+            "read": 1,
+            "role": "Control Owner"
+        }
+    ],
+    "search_fields": "source_doctype, source_name, control_activity",
+    "sort_field": "captured_at",
+    "sort_order": "DESC",
+    "states": [],
+    "title_field": "source_name",
+    "track_changes": 1,
+    "track_views": 1
+}

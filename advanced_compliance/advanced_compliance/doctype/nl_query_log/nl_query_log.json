@@ -1,0 +1,113 @@
+{
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2024-12-30 16:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "question",
+        "user",
+        "query_time",
+        "response_section",
+        "response",
+        "response_data",
+        "parsing_section",
+        "parsed_intent",
+        "generated_query"
+    ],
+    "fields": [
+        {
+            "fieldname": "question",
+            "fieldtype": "Text",
+            "in_list_view": 1,
+            "label": "Question",
+            "reqd": 1
+        },
+        {
+            "default": "__user",
+            "fieldname": "user",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "User",
+            "options": "User",
+            "read_only": 1
+        },
+        {
+            "default": "Now",
+            "fieldname": "query_time",
+            "fieldtype": "Datetime",
+            "in_list_view": 1,
+            "label": "Query Time",
+            "read_only": 1
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "parsing_section",
+            "fieldtype": "Section Break",
+            "label": "Query Parsing"
+        },
+        {
+            "description": "Parsed intent from natural language (JSON)",
+            "fieldname": "parsed_intent",
+            "fieldtype": "Code",
+            "label": "Parsed Intent",
+            "options": "JSON",
+            "read_only": 1
+        },
+        {
+            "description": "Generated database query",
+            "fieldname": "generated_query",
+            "fieldtype": "Code",
+            "label": "Generated Query",
+            "options": "Python",
+            "read_only": 1
+        },
+        {
+            "fieldname": "response_section",
+            "fieldtype": "Section Break",
+            "label": "Response"
+        },
+        {
+            "fieldname": "response",
+            "fieldtype": "Text",
+            "label": "Response",
+            "read_only": 1
+        },
+        {
+            "description": "Structured response data (JSON)",
+            "fieldname": "response_data",
+            "fieldtype": "Code",
+            "label": "Response Data",
+            "options": "JSON",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 0,
+    "links": [],
+    "modified": "2024-12-30 16:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "NL Query Log",
+    "naming_rule": "Expression",
+    "autoname": "format:NLQ-{####}",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Compliance Admin"
+        }
+    ],
+    "search_fields": "question, user",
+    "sort_field": "query_time",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 0
+}

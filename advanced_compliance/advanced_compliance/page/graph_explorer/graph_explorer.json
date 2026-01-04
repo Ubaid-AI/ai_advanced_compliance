@@ -1,0 +1,32 @@
+{
+    "content": null,
+    "creation": "2024-12-30 15:00:00.000000",
+    "docstatus": 0,
+    "doctype": "Page",
+    "icon": "share-2",
+    "idx": 0,
+    "modified": "2024-12-30 15:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "graph-explorer",
+    "owner": "Administrator",
+    "page_name": "graph-explorer",
+    "restrict_to_domain": "",
+    "roles": [
+        {
+            "role": "System Manager"
+        },
+        {
+            "role": "Compliance Admin"
+        },
+        {
+            "role": "Compliance Officer"
+        },
+        {
+            "role": "Internal Auditor"
+        }
+    ],
+    "standard": "Yes",
+    "system_page": 0,
+    "title": "Graph Explorer"
+}

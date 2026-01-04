@@ -1,0 +1,294 @@
+{
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2024-12-30 14:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "naming_series",
+        "title",
+        "status",
+        "column_break_basic",
+        "source",
+        "regulatory_body",
+        "document_type",
+        "dates_section",
+        "publication_date",
+        "effective_date",
+        "column_break_dates",
+        "compliance_deadline",
+        "days_until_effective",
+        "content_section",
+        "summary",
+        "full_text",
+        "extracted_data_section",
+        "citations",
+        "extracted_keywords",
+        "column_break_extracted",
+        "extracted_entities",
+        "reference_section",
+        "original_url",
+        "related_updates",
+        "processing_section",
+        "processed_date",
+        "ai_analyzed",
+        "column_break_processing",
+        "analysis_notes"
+    ],
+    "fields": [
+        {
+            "default": "REGUPD-.YYYY.-.#####",
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "REGUPD-.YYYY.-.#####",
+            "reqd": 1
+        },
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Title",
+            "length": 255,
+            "reqd": 1
+        },
+        {
+            "default": "New",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Status",
+            "options": "New\nPending Review\nReviewed\nAction Required\nImplemented\nNot Applicable"
+        },
+        {
+            "fieldname": "column_break_basic",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "source",
+            "fieldtype": "Link",
+            "in_standard_filter": 1,
+            "label": "Source",
+            "options": "Regulatory Feed Source"
+        },
+        {
+            "fieldname": "regulatory_body",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Regulatory Body",
+            "options": "\nSEC\nPCAOB\nFASB\nIASB\nEU\nOther"
+        },
+        {
+            "fieldname": "document_type",
+            "fieldtype": "Select",
+            "in_standard_filter": 1,
+            "label": "Document Type",
+            "options": "\nRule\nProposed Rule\nAmendment\nGuidance\nInterpretation\nRelease\nStaff Bulletin\nEnforcement\nOther"
+        },
+        {
+            "fieldname": "dates_section",
+            "fieldtype": "Section Break",
+            "label": "Important Dates"
+        },
+        {
+            "fieldname": "publication_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Publication Date"
+        },
+        {
+            "fieldname": "effective_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Effective Date"
+        },
+        {
+            "fieldname": "column_break_dates",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "compliance_deadline",
+            "fieldtype": "Date",
+            "label": "Compliance Deadline"
+        },
+        {
+            "description": "Calculated automatically",
+            "fieldname": "days_until_effective",
+            "fieldtype": "Int",
+            "label": "Days Until Effective",
+            "read_only": 1
+        },
+        {
+            "fieldname": "content_section",
+            "fieldtype": "Section Break",
+            "label": "Content"
+        },
+        {
+            "fieldname": "summary",
+            "fieldtype": "Text",
+            "label": "Summary"
+        },
+        {
+            "fieldname": "full_text",
+            "fieldtype": "Long Text",
+            "label": "Full Text"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "extracted_data_section",
+            "fieldtype": "Section Break",
+            "label": "Extracted Data"
+        },
+        {
+            "description": "Regulatory citations found (e.g., 17 CFR 240.10b-5)",
+            "fieldname": "citations",
+            "fieldtype": "Small Text",
+            "label": "Citations"
+        },
+        {
+            "fieldname": "extracted_keywords",
+            "fieldtype": "Small Text",
+            "label": "Extracted Keywords"
+        },
+        {
+            "fieldname": "column_break_extracted",
+            "fieldtype": "Column Break"
+        },
+        {
+            "description": "Organizations, dates, regulations mentioned",
+            "fieldname": "extracted_entities",
+            "fieldtype": "Small Text",
+            "label": "Extracted Entities"
+        },
+        {
+            "fieldname": "reference_section",
+            "fieldtype": "Section Break",
+            "label": "References"
+        },
+        {
+            "fieldname": "original_url",
+            "fieldtype": "Data",
+            "label": "Original URL",
+            "options": "URL",
+            "unique": 1
+        },
+        {
+            "description": "Links to related regulatory updates",
+            "fieldname": "related_updates",
+            "fieldtype": "Table MultiSelect",
+            "label": "Related Updates",
+            "options": "Regulatory Update Link"
+        },
+        {
+            "collapsible": 1,
+            "fieldname": "processing_section",
+            "fieldtype": "Section Break",
+            "label": "Processing Information"
+        },
+        {
+            "fieldname": "processed_date",
+            "fieldtype": "Datetime",
+            "label": "Processed Date",
+            "read_only": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "ai_analyzed",
+            "fieldtype": "Check",
+            "label": "AI Analyzed",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_processing",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "analysis_notes",
+            "fieldtype": "Small Text",
+            "label": "Analysis Notes"
+        }
+    ],
+    "links": [
+        {
+            "group": "Changes",
+            "link_doctype": "Regulatory Change",
+            "link_fieldname": "regulatory_update"
+        },
+        {
+            "group": "Impact",
+            "link_doctype": "Regulatory Impact Assessment",
+            "link_fieldname": "regulatory_update"
+        }
+    ],
+    "modified": "2024-12-30 14:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Regulatory Update",
+    "naming_rule": "By \"Naming Series\" field",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Compliance Officer",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Internal Auditor"
+        },
+        {
+            "read": 1,
+            "role": "Compliance Viewer"
+        }
+    ],
+    "search_fields": "title, regulatory_body, document_type",
+    "sort_field": "publication_date",
+    "sort_order": "DESC",
+    "states": [
+        {
+            "color": "Blue",
+            "title": "New"
+        },
+        {
+            "color": "Orange",
+            "title": "Pending Review"
+        },
+        {
+            "color": "Yellow",
+            "title": "Reviewed"
+        },
+        {
+            "color": "Red",
+            "title": "Action Required"
+        },
+        {
+            "color": "Green",
+            "title": "Implemented"
+        },
+        {
+            "color": "Gray",
+            "title": "Not Applicable"
+        }
+    ],
+    "title_field": "title",
+    "track_changes": 1,
+    "track_views": 1
+}

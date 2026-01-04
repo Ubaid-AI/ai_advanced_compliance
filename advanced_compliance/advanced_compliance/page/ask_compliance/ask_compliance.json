@@ -1,0 +1,28 @@
+{
+    "content": null,
+    "creation": "2026-01-01 13:30:00.000000",
+    "docstatus": 0,
+    "doctype": "Page",
+    "idx": 0,
+    "modified": "2026-01-01 13:30:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "ask-compliance",
+    "owner": "Administrator",
+    "page_name": "ask-compliance",
+    "roles": [
+        {
+            "role": "System Manager"
+        },
+        {
+            "role": "Compliance Admin"
+        },
+        {
+            "role": "Accounts Manager"
+        }
+    ],
+    "script": null,
+    "standard": "Yes",
+    "system_page": 0,
+    "title": "Ask Compliance"
+}

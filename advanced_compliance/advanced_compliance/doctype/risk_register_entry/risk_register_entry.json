@@ -1,0 +1,230 @@
+{
+    "actions": [],
+    "allow_export": 1,
+    "allow_import": 1,
+    "allow_rename": 0,
+    "creation": "2024-12-29 12:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "naming_series",
+        "risk_name",
+        "description",
+        "risk_category",
+        "status",
+        "assessment_section",
+        "inherent_likelihood",
+        "inherent_impact",
+        "inherent_risk_score",
+        "column_break_assess",
+        "residual_likelihood",
+        "residual_impact",
+        "residual_risk_score",
+        "ownership_section",
+        "risk_owner",
+        "department",
+        "column_break_own",
+        "company",
+        "mitigating_controls_section",
+        "mitigating_controls"
+    ],
+    "fields": [
+        {
+            "default": "RISK-.YYYY.-.#####",
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "RISK-.YYYY.-.#####",
+            "reqd": 1
+        },
+        {
+            "fieldname": "risk_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Risk Name",
+            "reqd": 1
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text Editor",
+            "label": "Description"
+        },
+        {
+            "fieldname": "risk_category",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Category",
+            "options": "Risk Category"
+        },
+        {
+            "default": "Open",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "label": "Status",
+            "options": "Open\nMitigated\nAccepted\nTransferred\nClosed"
+        },
+        {
+            "fieldname": "assessment_section",
+            "fieldtype": "Section Break",
+            "label": "Risk Assessment"
+        },
+        {
+            "fieldname": "inherent_likelihood",
+            "fieldtype": "Select",
+            "label": "Inherent Likelihood",
+            "options": "\n1 - Rare\n2 - Unlikely\n3 - Possible\n4 - Likely\n5 - Almost Certain"
+        },
+        {
+            "fieldname": "inherent_impact",
+            "fieldtype": "Select",
+            "label": "Inherent Impact",
+            "options": "\n1 - Low\n2 - Medium\n3 - High\n4 - Critical"
+        },
+        {
+            "fieldname": "inherent_risk_score",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "label": "Inherent Risk Score",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_assess",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "residual_likelihood",
+            "fieldtype": "Select",
+            "label": "Residual Likelihood",
+            "options": "\n1 - Rare\n2 - Unlikely\n3 - Possible\n4 - Likely\n5 - Almost Certain"
+        },
+        {
+            "fieldname": "residual_impact",
+            "fieldtype": "Select",
+            "label": "Residual Impact",
+            "options": "\n1 - Low\n2 - Medium\n3 - High\n4 - Critical"
+        },
+        {
+            "fieldname": "residual_risk_score",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "label": "Residual Risk Score",
+            "read_only": 1
+        },
+        {
+            "fieldname": "ownership_section",
+            "fieldtype": "Section Break",
+            "label": "Ownership"
+        },
+        {
+            "fieldname": "risk_owner",
+            "fieldtype": "Link",
+            "label": "Risk Owner",
+            "options": "User"
+        },
+        {
+            "fieldname": "department",
+            "fieldtype": "Link",
+            "label": "Department",
+            "options": "Department"
+        },
+        {
+            "fieldname": "column_break_own",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "company",
+            "fieldtype": "Link",
+            "label": "Company",
+            "options": "Company"
+        },
+        {
+            "fieldname": "mitigating_controls_section",
+            "fieldtype": "Section Break",
+            "label": "Mitigating Controls"
+        },
+        {
+            "fieldname": "mitigating_controls",
+            "fieldtype": "Table",
+            "label": "Controls",
+            "options": "Risk Control Link"
+        }
+    ],
+    "links": [],
+    "modified": "2024-12-31 15:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Advanced Compliance",
+    "name": "Risk Register Entry",
+    "naming_rule": "By \"Naming Series\" field",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "export": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "export": 1,
+            "read": 1,
+            "role": "Compliance Admin",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "export": 1,
+            "read": 1,
+            "role": "Compliance Officer",
+            "write": 1
+        },
+        {
+            "export": 1,
+            "read": 1,
+            "role": "Internal Auditor"
+        },
+        {
+            "if_owner": 1,
+            "read": 1,
+            "role": "Control Owner"
+        },
+        {
+            "read": 1,
+            "role": "Compliance Viewer"
+        }
+    ],
+    "search_fields": "risk_name, risk_owner",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [
+        {
+            "color": "Red",
+            "title": "Open"
+        },
+        {
+            "color": "Green",
+            "title": "Mitigated"
+        },
+        {
+            "color": "Blue",
+            "title": "Accepted"
+        },
+        {
+            "color": "Purple",
+            "title": "Transferred"
+        },
+        {
+            "color": "Gray",
+            "title": "Closed"
+        }
+    ],
+    "title_field": "risk_name",
+    "track_changes": 1,
+    "track_views": 1
+}
