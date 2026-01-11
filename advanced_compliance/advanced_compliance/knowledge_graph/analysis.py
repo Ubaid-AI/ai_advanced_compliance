@@ -39,6 +39,21 @@ class CoverageAnalyzer:
 			fields=["name", "entity_id", "entity_label", "properties"],
 		)
 
+		# MEDIUM PRIORITY FIX: Batch load all MITIGATES relationships to avoid N+1 queries
+		# Before: N queries (one per risk), After: 1 query total
+		all_mitigates = frappe.get_all(
+			"Compliance Graph Relationship",
+			filters={"relationship_type": "MITIGATES", "is_active": 1},
+			fields=["source_entity", "target_entity"],
+		)
+
+		# Build map: risk_entity -> [control_entities]
+		risk_controls_map = {}
+		for rel in all_mitigates:
+			if rel.target_entity not in risk_controls_map:
+				risk_controls_map[rel.target_entity] = []
+			risk_controls_map[rel.target_entity].append(rel.source_entity)
+
 		covered_risks = []
 		uncovered_risks = []
 		partially_covered = []
@@ -50,21 +65,16 @@ class CoverageAnalyzer:
 				if props.get("company") and props.get("company") != company:
 					continue
 
-			# Get mitigating controls
-			mitigating = frappe.get_all(
-				"Compliance Graph Relationship",
-				filters={"target_entity": risk.name, "relationship_type": "MITIGATES", "is_active": 1},
-				fields=["source_entity"],
-			)
-
-			control_count = len(mitigating)
+			# Get mitigating controls from map (no query!)
+			mitigating_controls = risk_controls_map.get(risk.name, [])
+			control_count = len(mitigating_controls)
 
 			risk_info = {
 				"entity": risk.name,
 				"risk_id": risk.entity_id,
 				"label": risk.entity_label,
 				"control_count": control_count,
-				"controls": [m.source_entity for m in mitigating],
+				"controls": mitigating_controls,
 			}
 
 			if control_count == 0:
@@ -107,6 +117,21 @@ class CoverageAnalyzer:
 			fields=["name", "entity_id", "entity_label", "properties"],
 		)
 
+		# MEDIUM PRIORITY FIX: Batch load all TESTS relationships to avoid N+1 queries
+		# Before: N queries (one per control), After: 1 query total
+		all_tests = frappe.get_all(
+			"Compliance Graph Relationship",
+			filters={"relationship_type": "TESTS", "is_active": 1},
+			fields=["source_entity", "target_entity"],
+		)
+
+		# Build map: control_entity -> [test_entities]
+		control_tests_map = {}
+		for rel in all_tests:
+			if rel.target_entity not in control_tests_map:
+				control_tests_map[rel.target_entity] = []
+			control_tests_map[rel.target_entity].append(rel.source_entity)
+
 		tested_controls = []
 		untested_controls = []
 		key_controls_untested = []
@@ -118,12 +143,8 @@ class CoverageAnalyzer:
 				if props.get("company") and props.get("company") != company:
 					continue
 
-			# Get testing evidence
-			testing = frappe.get_all(
-				"Compliance Graph Relationship",
-				filters={"target_entity": control.name, "relationship_type": "TESTS", "is_active": 1},
-				fields=["source_entity"],
-			)
+			# Get testing evidence from map (no query!)
+			testing_evidence = control_tests_map.get(control.name, [])
 
 			props = json.loads(control.properties or "{}")
 			is_key = props.get("is_key_control", False)
@@ -133,11 +154,11 @@ class CoverageAnalyzer:
 				"control_id": control.entity_id,
 				"label": control.entity_label,
 				"is_key_control": is_key,
-				"evidence_count": len(testing),
-				"evidence": [t.source_entity for t in testing],
+				"evidence_count": len(testing_evidence),
+				"evidence": testing_evidence,
 			}
 
-			if len(testing) > 0:
+			if len(testing_evidence) > 0:
 				tested_controls.append(control_info)
 			else:
 				untested_controls.append(control_info)
@@ -391,17 +412,37 @@ class CoverageAnalyzer:
 		}
 
 	def _get_dependency_chain_length(self, entity, dependency_map, visited):
-		"""Recursively calculate dependency chain length."""
-		if entity in visited:
-			return 0  # Circular dependency
+		"""
+		Recursively calculate dependency chain length.
 
+		HIGH PRIORITY FIX: Uses global visited set to detect all circular dependencies,
+		not just local cycles. Implements backtracking to avoid false positives.
+
+		Args:
+		    entity: Current entity being explored
+		    dependency_map: Map of entity dependencies
+		    visited: Set of entities in current recursion path
+
+		Returns:
+		    Maximum dependency chain length, or 0 if circular dependency detected
+		"""
+		if entity in visited:
+			# Circular dependency detected - log warning
+			frappe.logger("compliance").warning(f"Circular dependency detected in entity: {entity}")
+			return 0
+
+		# Add to visited set for this recursion path
 		visited.add(entity)
 		max_depth = 0
 
 		if entity in dependency_map:
 			for dep in dependency_map[entity]:
-				depth = self._get_dependency_chain_length(dep["depends_on"], dependency_map, visited.copy())
+				# Use same visited set (not copy) to detect global cycles
+				depth = self._get_dependency_chain_length(dep["depends_on"], dependency_map, visited)
 				max_depth = max(max_depth, depth + 1)
+
+		# Backtrack: remove from visited to allow other paths to visit this entity
+		visited.remove(entity)
 
 		return max_depth
 

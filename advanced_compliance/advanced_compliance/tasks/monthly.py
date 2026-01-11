@@ -11,7 +11,30 @@ def calculate_compliance_scores():
 	Calculate and store compliance scores.
 
 	Runs monthly via scheduler.
+
+	MEDIUM PRIORITY FIX (#18): Added task locking to prevent duplicate execution.
 	"""
+	# Task locking to ensure idempotency
+	lock_name = "calculate_compliance_scores_lock"
+	lock_timeout = 7200  # 2 hours
+
+	# Check if task is already running
+	if frappe.cache().get_value(lock_name):
+		frappe.logger("advanced_compliance").info("calculate_compliance_scores already running, skipping")
+		return
+
+	# Acquire lock
+	frappe.cache().set_value(lock_name, "locked", expires_in_sec=lock_timeout)
+
+	try:
+		_calculate_compliance_scores_impl()
+	finally:
+		# Always release lock
+		frappe.cache().delete_value(lock_name)
+
+
+def _calculate_compliance_scores_impl():
+	"""Internal implementation of calculate_compliance_scores (after lock acquired)."""
 	settings = frappe.get_single("Compliance Settings")
 
 	# Validate settings exist before accessing attributes

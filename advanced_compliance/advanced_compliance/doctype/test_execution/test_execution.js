@@ -1,4 +1,4 @@
-// Copyright (c) 2024, Norlei North and contributors
+// Copyright (c) 2025, Noreli North
 // For license information, please see license.txt
 
 frappe.ui.form.on("Test Execution", {

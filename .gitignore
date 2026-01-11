@@ -142,3 +142,11 @@ node_modules/
 docs_internal/
 PHASE_*.md
 IMPLEMENTATION_PLAN.md
+
+# Marketplace preparation documents (internal only)
+MARKETPLACE_FORM_FIELDS.txt
+MARKETPLACE_PROFILE.md
+MARKETPLACE_READY*.md
+MARKETPLACE_SUBMISSION_*.md
+PRIVACY_SANITIZATION.md
+SCREENSHOT_GUIDE.md

@@ -11,7 +11,30 @@ def generate_compliance_digest():
 	Generate weekly compliance digest.
 
 	Runs weekly via scheduler.
+
+	MEDIUM PRIORITY FIX (#18): Added task locking to prevent duplicate execution.
 	"""
+	# Task locking to ensure idempotency
+	lock_name = "generate_compliance_digest_lock"
+	lock_timeout = 7200  # 2 hours
+
+	# Check if task is already running
+	if frappe.cache().get_value(lock_name):
+		frappe.logger("advanced_compliance").info("generate_compliance_digest already running, skipping")
+		return
+
+	# Acquire lock
+	frappe.cache().set_value(lock_name, "locked", expires_in_sec=lock_timeout)
+
+	try:
+		_generate_compliance_digest_impl()
+	finally:
+		# Always release lock
+		frappe.cache().delete_value(lock_name)
+
+
+def _generate_compliance_digest_impl():
+	"""Internal implementation of generate_compliance_digest (after lock acquired)."""
 	settings = frappe.get_single("Compliance Settings")
 
 	# Validate settings exist before accessing attributes

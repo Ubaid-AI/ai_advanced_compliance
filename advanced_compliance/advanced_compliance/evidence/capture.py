@@ -38,10 +38,22 @@ def on_document_submit(doc, method):
 			try:
 				capture_evidence(doc, rule)
 			except Exception as e:
-				# Log error but don't fail the transaction
+				# HIGH PRIORITY FIX: Evidence capture failure should warn user
+				# Log error for admin review
 				frappe.log_error(
-					message=f"Evidence capture failed for {doc.doctype} {doc.name}: {str(e)}",
+					message=f"Evidence capture failed for {doc.doctype} {doc.name}: {str(e)}\n{frappe.get_traceback()}",
 					title=_("Evidence Capture Error"),
+				)
+
+				# Show warning to user so they know evidence wasn't captured
+				frappe.msgprint(
+					_(
+						"Warning: Evidence capture failed for rule {0}. "
+						"The document was submitted successfully, but compliance evidence was not recorded. "
+						"Please contact your system administrator."
+					).format(frappe.bold(rule.rule_name)),
+					title=_("Evidence Capture Failed"),
+					indicator="orange",
 				)
 
 
@@ -67,9 +79,20 @@ def on_document_update(doc, method):
 			try:
 				capture_evidence(doc, rule)
 			except Exception as e:
+				# HIGH PRIORITY FIX: Evidence capture failure should warn user
 				frappe.log_error(
-					message=f"Evidence capture failed for {doc.doctype} {doc.name}: {str(e)}",
+					message=f"Evidence capture failed for {doc.doctype} {doc.name}: {str(e)}\n{frappe.get_traceback()}",
 					title=_("Evidence Capture Error"),
+				)
+
+				frappe.msgprint(
+					_(
+						"Warning: Evidence capture failed for rule {0}. "
+						"The document was updated, but compliance evidence was not recorded. "
+						"Please contact your system administrator."
+					).format(frappe.bold(rule.rule_name)),
+					title=_("Evidence Capture Failed"),
+					indicator="orange",
 				)
 
 
@@ -95,9 +118,20 @@ def on_document_cancel(doc, method):
 			try:
 				capture_evidence(doc, rule)
 			except Exception as e:
+				# HIGH PRIORITY FIX: Evidence capture failure should warn user
 				frappe.log_error(
-					message=f"Evidence capture failed for {doc.doctype} {doc.name}: {str(e)}",
+					message=f"Evidence capture failed for {doc.doctype} {doc.name}: {str(e)}\n{frappe.get_traceback()}",
 					title=_("Evidence Capture Error"),
+				)
+
+				frappe.msgprint(
+					_(
+						"Warning: Evidence capture failed for rule {0}. "
+						"The document was cancelled, but compliance evidence was not recorded. "
+						"Please contact your system administrator."
+					).format(frappe.bold(rule.rule_name)),
+					title=_("Evidence Capture Failed"),
+					indicator="orange",
 				)
 
 
@@ -171,6 +205,17 @@ def evaluate_single_condition(field_value, operator, check_value):
 	Returns:
 	    True if condition is met, False otherwise
 	"""
+	# CRITICAL: Validate operator before use to prevent injection
+	# Define allowed operators as a whitelist
+	ALLOWED_OPERATORS = {"=", "!=", ">", ">=", "<", "<=", "in", "not in"}
+
+	if operator not in ALLOWED_OPERATORS:
+		frappe.log_error(
+			message=f"Invalid operator attempted: {operator}",
+			title=_("Security: Invalid Operator"),
+		)
+		return False
+
 	# Handle None values
 	if field_value is None:
 		field_value = ""
@@ -211,6 +256,14 @@ def capture_evidence(doc, rule):
 	    doc: The document to capture evidence from
 	    rule: The capture rule configuration
 	"""
+	# CRITICAL: Validate user has permission BEFORE capturing any data
+	# Evidence capture is an audit function that should respect user permissions
+	if not frappe.has_permission("Control Evidence", "create"):
+		frappe.throw(
+			_("Evidence capture failed: You do not have permission to create Control Evidence records."),
+			frappe.PermissionError,
+		)
+
 	evidence = frappe.new_doc("Control Evidence")
 	evidence.control_activity = rule.control_activity
 	evidence.capture_rule = rule.name
@@ -243,14 +296,6 @@ def capture_evidence(doc, rule):
 	if rule.linked_doctypes:
 		linked_doctypes = [dt.strip() for dt in rule.linked_doctypes.split("\n") if dt.strip()]
 		capture_linked_documents(evidence, doc, linked_doctypes)
-
-	# Validate user has permission to create Control Evidence
-	# Evidence capture is an audit function that should respect user permissions
-	if not frappe.has_permission("Control Evidence", "create"):
-		frappe.throw(
-			_("Evidence capture failed: You do not have permission to create Control Evidence records."),
-			frappe.PermissionError,
-		)
 
 	evidence.insert()
 
@@ -400,20 +445,35 @@ def capture_version_history(doc):
 	for version in versions:
 		# Truncate large version data with warning
 		changes_data = version.data
+		truncated = False
+		original_size = 0
+
+		# MEDIUM PRIORITY FIX (#13): Add user-visible truncation indicator
 		if version.data and len(version.data) > 5000:
+			original_size = len(version.data)
 			changes_data = version.data[:5000]
+			truncated = True
 			frappe.logger("compliance").warning(
 				f"Version history truncated for {doc.doctype} {doc.name}: "
-				f"Original size {len(version.data)} chars, truncated to 5000 chars"
+				f"Original size {original_size} chars, truncated to 5000 chars"
 			)
 
-		version_log.append(
-			{
-				"user": version.owner,
-				"timestamp": str(version.creation),
-				"changes": changes_data,
-			}
-		)
+		version_entry = {
+			"user": version.owner,
+			"timestamp": str(version.creation),
+			"changes": changes_data,
+		}
+
+		# Add truncation metadata so users are aware
+		if truncated:
+			version_entry["truncated"] = True
+			version_entry["original_size"] = original_size
+			version_entry["truncated_size"] = 5000
+			version_entry["warning"] = (
+				f"⚠️ Change data truncated due to size. Original size: {original_size} chars"
+			)
+
+		version_log.append(version_entry)
 
 	return json.dumps(version_log, indent=2) if version_log else None
 
@@ -491,6 +551,10 @@ def find_linked_documents(doc, link_doctype):
 	Returns:
 	    List of linked document references
 	"""
+	# CRITICAL: Define maximum total links to prevent memory exhaustion
+	# Across all linked doctypes, limit total to 100 documents
+	MAX_TOTAL_LINKS = 100
+
 	linked = []
 
 	# Check for direct link fields in source document
@@ -501,20 +565,39 @@ def find_linked_documents(doc, link_doctype):
 			if value:
 				linked.append({"name": value, "link_field": field.fieldname})
 
+				# Check total limit
+				if len(linked) >= MAX_TOTAL_LINKS:
+					frappe.logger("compliance").warning(
+						f"Linked documents limit reached ({MAX_TOTAL_LINKS}) for {doc.doctype} {doc.name}"
+					)
+					return linked
+
 	# Check for references in the linked DocType pointing to source
 	try:
 		link_meta = frappe.get_meta(link_doctype)
 		for field in link_meta.get_link_fields():
 			if field.options == doc.doctype:
+				# Calculate remaining limit
+				remaining_limit = MAX_TOTAL_LINKS - len(linked)
+				if remaining_limit <= 0:
+					break
+
 				refs = frappe.get_all(
 					link_doctype,
 					filters={field.fieldname: doc.name},
 					pluck="name",
-					limit=50,  # Limit to prevent too many links
+					limit=min(50, remaining_limit),  # Use smaller of 50 or remaining limit
 				)
 				for ref in refs:
 					if {"name": ref, "link_field": field.fieldname} not in linked:
 						linked.append({"name": ref, "link_field": field.fieldname})
+
+						# Check total limit
+						if len(linked) >= MAX_TOTAL_LINKS:
+							frappe.logger("compliance").warning(
+								f"Linked documents limit reached ({MAX_TOTAL_LINKS}) for {doc.doctype} {doc.name}"
+							)
+							return linked
 	except Exception:
 		# DocType might not exist or have issues
 		pass

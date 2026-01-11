@@ -82,6 +82,30 @@ class ControlEvidence(Document):
 
 		return True
 
+	def on_trash(self):
+		"""
+		Clean up associated files when Control Evidence is deleted.
+
+		MEDIUM PRIORITY FIX (#12): Delete PDF files to prevent orphaned files accumulating.
+		"""
+		if self.document_snapshot:
+			try:
+				# Find File DocType record by file_url
+				file_name = frappe.db.get_value("File", {"file_url": self.document_snapshot}, "name")
+
+				if file_name:
+					# Delete the File DocType record (also deletes physical file)
+					frappe.delete_doc("File", file_name, force=True, ignore_permissions=True)
+					frappe.logger("compliance").info(
+						f"Deleted PDF file {file_name} associated with Control Evidence {self.name}"
+					)
+			except Exception as e:
+				# Log error but don't prevent evidence deletion
+				frappe.log_error(
+					message=f"Failed to delete PDF file for Control Evidence {self.name}: {str(e)}",
+					title=_("PDF Cleanup Error"),
+				)
+
 	@staticmethod
 	def get_evidence_for_control(control_activity, from_date=None, to_date=None):
 		"""

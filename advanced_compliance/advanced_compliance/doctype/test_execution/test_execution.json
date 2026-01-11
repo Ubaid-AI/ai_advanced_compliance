@@ -178,6 +178,13 @@
             "read_only": 1
         }
     ],
+    "index_web_pages_for_search": 0,
+    "indexes": [
+        {
+            "unique": 1,
+            "fields": ["control", "test_date"]
+        }
+    ],
     "is_submittable": 1,
     "links": [
         {

@@ -116,6 +116,9 @@ class ComplianceGraphEntity(Document):
 		"""
 		Get existing entity or create new one.
 
+		CRITICAL: Handles race conditions where multiple processes attempt to create
+		the same entity simultaneously. Uses DuplicateEntryError handling to retry.
+
 		Args:
 		    entity_type: Type of entity (Control, Risk, etc.)
 		    entity_doctype: Source DocType name
@@ -133,18 +136,39 @@ class ComplianceGraphEntity(Document):
 		if existing:
 			return frappe.get_doc("Compliance Graph Entity", existing)
 
-		# Create new entity
-		entity = frappe.get_doc(
-			{
-				"doctype": "Compliance Graph Entity",
-				"entity_type": entity_type,
-				"entity_doctype": entity_doctype,
-				"entity_id": entity_id,
-				"is_active": 1,
-			}
-		)
-		entity.insert(ignore_permissions=True)
-		return entity
+		# Create new entity with race condition handling
+		try:
+			entity = frappe.get_doc(
+				{
+					"doctype": "Compliance Graph Entity",
+					"entity_type": entity_type,
+					"entity_doctype": entity_doctype,
+					"entity_id": entity_id,
+					"is_active": 1,
+				}
+			)
+			entity.insert(ignore_permissions=True)
+			return entity
+
+		except frappe.exceptions.DuplicateEntryError:
+			# Another process created this entity between our check and insert
+			# Retry getting the existing entity
+			frappe.db.commit()  # Commit to see the other process's insert
+			existing = frappe.db.get_value(
+				"Compliance Graph Entity",
+				{"entity_doctype": entity_doctype, "entity_id": entity_id, "is_active": 1},
+				"name",
+			)
+
+			if existing:
+				return frappe.get_doc("Compliance Graph Entity", existing)
+
+			# If still not found, log error and re-raise
+			frappe.log_error(
+				message=f"Race condition: Entity not found after DuplicateEntryError: {entity_doctype}:{entity_id}",
+				title=_("Graph Sync Race Condition"),
+			)
+			raise
 
 	@staticmethod
 	def deactivate_for_document(entity_doctype, entity_id):

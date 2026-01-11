@@ -13,7 +13,30 @@ def check_overdue_tests():
 
 	Runs daily via scheduler. Creates one alert per overdue control
 	if no open alert already exists.
+
+	MEDIUM PRIORITY FIX (#18): Added task locking to prevent duplicate execution.
 	"""
+	# Task locking to ensure idempotency
+	lock_name = "check_overdue_tests_lock"
+	lock_timeout = 3600  # 1 hour
+
+	# Check if task is already running
+	if frappe.cache().get_value(lock_name):
+		frappe.logger("advanced_compliance").info("check_overdue_tests already running, skipping")
+		return
+
+	# Acquire lock
+	frappe.cache().set_value(lock_name, "locked", expires_in_sec=lock_timeout)
+
+	try:
+		_check_overdue_tests_impl()
+	finally:
+		# Always release lock
+		frappe.cache().delete_value(lock_name)
+
+
+def _check_overdue_tests_impl():
+	"""Internal implementation of check_overdue_tests (after lock acquired)."""
 	settings = frappe.get_single("Compliance Settings")
 
 	# Validate settings exist before accessing attributes
@@ -114,7 +137,30 @@ def send_control_owner_reminders():
 	Send reminders to control owners for upcoming tests.
 
 	Runs daily via scheduler.
+
+	MEDIUM PRIORITY FIX (#18): Added task locking to prevent duplicate execution.
 	"""
+	# Task locking to ensure idempotency
+	lock_name = "send_control_owner_reminders_lock"
+	lock_timeout = 3600  # 1 hour
+
+	# Check if task is already running
+	if frappe.cache().get_value(lock_name):
+		frappe.logger("advanced_compliance").info("send_control_owner_reminders already running, skipping")
+		return
+
+	# Acquire lock
+	frappe.cache().set_value(lock_name, "locked", expires_in_sec=lock_timeout)
+
+	try:
+		_send_control_owner_reminders_impl()
+	finally:
+		# Always release lock
+		frappe.cache().delete_value(lock_name)
+
+
+def _send_control_owner_reminders_impl():
+	"""Internal implementation of send_control_owner_reminders (after lock acquired)."""
 	settings = frappe.get_single("Compliance Settings")
 
 	# Validate settings exist before accessing attributes

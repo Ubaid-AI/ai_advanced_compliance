@@ -339,52 +339,74 @@ class GraphSyncEngine:
 			# Deactivate entity
 			ComplianceGraphEntity.deactivate_for_document(doc.doctype, doc.name)
 
+			# MEDIUM PRIORITY FIX (#17): Clear entity from cache to prevent stale references
+			cache_key = f"{doc.doctype}:{doc.name}"
+			if cache_key in self.entity_cache:
+				del self.entity_cache[cache_key]
+
 
 # Document event handlers
 def on_control_created(doc, method):
 	"""Handle Control Activity creation."""
+	# Skip graph sync during demo data generation to avoid deadlocks
+	if frappe.flags.skip_graph_sync:
+		return
 	sync = GraphSyncEngine()
 	sync.sync_document(doc, "create")
 
 
 def on_control_updated(doc, method):
 	"""Handle Control Activity update."""
+	if frappe.flags.skip_graph_sync:
+		return
 	sync = GraphSyncEngine()
 	sync.sync_document(doc, "update")
 
 
 def on_control_deleted(doc, method):
 	"""Handle Control Activity deletion."""
+	if frappe.flags.skip_graph_sync:
+		return
 	sync = GraphSyncEngine()
 	sync.sync_document(doc, "delete")
 
 
 def on_risk_created(doc, method):
 	"""Handle Risk Register Entry creation."""
+	if frappe.flags.skip_graph_sync:
+		return
 	sync = GraphSyncEngine()
 	sync.sync_document(doc, "create")
 
 
 def on_risk_updated(doc, method):
 	"""Handle Risk Register Entry update."""
+	if frappe.flags.skip_graph_sync:
+		return
 	sync = GraphSyncEngine()
 	sync.sync_document(doc, "update")
 
 
 def on_evidence_created(doc, method):
 	"""Handle Control Evidence creation."""
+	if frappe.flags.skip_graph_sync:
+		return
 	sync = GraphSyncEngine()
 	sync.sync_document(doc, "create")
 
 
 def on_test_created(doc, method):
 	"""Handle Test Execution creation."""
+	if frappe.flags.skip_graph_sync:
+		return
 	sync = GraphSyncEngine()
 	sync.sync_document(doc, "create")
 
 
 def on_test_updated(doc, method):
 	"""Handle Test Execution update."""
+	if frappe.flags.skip_graph_sync:
+		return
 	sync = GraphSyncEngine()
 	sync.sync_document(doc, "update")
 
@@ -404,10 +426,12 @@ def rebuild_graph():
 		# Create savepoint for rollback on failure
 		frappe.db.savepoint("rebuild_graph_start")
 
-		# Clear existing graph data
-		frappe.db.delete("Compliance Graph Path")
-		frappe.db.delete("Compliance Graph Relationship")
-		frappe.db.delete("Compliance Graph Entity")
+		# MEDIUM PRIORITY FIX (#15): Use SQL DELETE instead of frappe.db.delete()
+		# frappe.db.delete() may autocommit and bypass savepoint
+		# SQL DELETE respects transaction boundaries and savepoint
+		frappe.db.sql("DELETE FROM `tabCompliance Graph Path`")
+		frappe.db.sql("DELETE FROM `tabCompliance Graph Relationship`")
+		frappe.db.sql("DELETE FROM `tabCompliance Graph Entity`")
 
 		sync = GraphSyncEngine()
 		stats = {"entities": 0, "relationships": 0}
