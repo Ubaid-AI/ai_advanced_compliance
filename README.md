@@ -53,7 +53,7 @@ Transform compliance from a periodic checkbox exercise into a continuous, intell
 ### From Frappe Cloud
 1. Go to your Frappe Cloud dashboard
 2. Navigate to Apps
-3. Search for "Noreli North Advanced Compliance"
+3. Search for "Noreli North AI Advanced Compliance"
 4. Click Install
 
 ## Requirements
