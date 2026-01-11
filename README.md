@@ -48,6 +48,35 @@ Transform compliance from a periodic checkbox exercise into a continuous, intell
 - GDPR
 - Industry-specific (FDA, HIPAA, PCI-DSS)
 
+## Version Compatibility
+
+| App Version | Frappe Version | ERPNext Version | Branch | Status |
+|-------------|----------------|-----------------|--------|--------|
+| v1.x.x | v15.x | v15.x | `version-15` | ✅ Stable |
+| v2.0.0-beta | v16.x (beta) | v16.x (beta) | `version-16-beta` | ⚠️ Beta Testing |
+
+### Installation by Version
+
+**For Production (Frappe v15 - Recommended):**
+```bash
+bench get-app https://github.com/norelinorth/norelinorth_ai_advanced_compliance.git --branch version-15
+bench --site [site-name] install-app advanced_compliance
+```
+
+**For Testing Frappe v16 Beta:**
+```bash
+bench get-app https://github.com/norelinorth/norelinorth_ai_advanced_compliance.git --branch version-16-beta
+bench --site [site-name] install-app advanced_compliance
+```
+
+**Latest Development (may be unstable):**
+```bash
+bench get-app https://github.com/norelinorth/norelinorth_ai_advanced_compliance.git
+bench --site [site-name] install-app advanced_compliance
+```
+
+---
+
 ## Installation
 
 ### From Frappe Cloud
