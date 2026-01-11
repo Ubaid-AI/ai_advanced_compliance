@@ -1458,6 +1458,168 @@ def create_test_data():
 	return result
 
 
+@frappe.whitelist()
+def clear_test_data():
+	"""Clear all test data (use before regenerating)."""
+	if not frappe.has_permission("Control Activity", "delete"):
+		frappe.throw(_("Insufficient permissions to delete test data"))
+
+	print("\n" + "=" * 80)
+	print("CLEARING ALL TEST DATA")
+	print("=" * 80)
+
+	# Clear in reverse dependency order
+	doctypes_to_clear = [
+		"NL Query Log",
+		"Risk Prediction",
+		"Compliance Graph Path",
+		"Compliance Graph Relationship",
+		"Compliance Graph Entity",
+		"Compliance Alert",
+		"Control Evidence",
+		"Evidence Capture Rule",
+		"Deficiency",
+		"Test Execution",  # Will also delete Test Evidence child table
+		"Control Activity",
+		"Risk Register Entry",
+		"Control Category",
+		"Risk Category",
+	]
+
+	counts = {}
+	for doctype in doctypes_to_clear:
+		count = frappe.db.count(doctype)
+		if count > 0:
+			print(f"\nDeleting {count} {doctype} records...")
+			# Delete all records of this doctype
+			frappe.db.delete(doctype)
+			counts[doctype] = count
+			print(f"  ✅ Deleted {count} records")
+
+	frappe.db.commit()
+	print("\n" + "=" * 80)
+	print("TEST DATA CLEARED SUCCESSFULLY")
+	print("=" * 80 + "\n")
+
+	return counts
+
+
+@frappe.whitelist()
+def regenerate_test_data():
+	"""Clear and regenerate all test data."""
+	if not frappe.has_permission("Control Activity", "create"):
+		frappe.throw(_("Insufficient permissions to regenerate test data"))
+
+	# Step 1: Clear existing test data
+	print("\n🗑️  STEP 1: Clearing existing test data...")
+	clear_counts = clear_test_data()
+
+	# Step 2: Create fresh test data
+	print("\n✨ STEP 2: Creating fresh test data...")
+	create_result = setup_comprehensive_test_data()
+
+	# Step 3: Audit to verify
+	print("\n🔍 STEP 3: Verifying test data...")
+	audit_result = audit_test_data()
+
+	return {
+		"cleared": clear_counts,
+		"created": create_result,
+		"audit": audit_result,
+		"status": "success",
+	}
+
+
+@frappe.whitelist()
+def audit_test_data():
+	"""Audit existing test data to see what fields are populated."""
+	print("\n" + "=" * 80)
+	print("ADVANCED COMPLIANCE TEST DATA AUDIT")
+	print("=" * 80)
+
+	# Check Test Executions
+	print("\n📋 TEST EXECUTIONS:")
+	print("-" * 80)
+
+	test_executions = frappe.get_all(
+		"Test Execution",
+		fields=["name", "control", "test_period", "reviewer", "review_date", "test_result"],
+		limit=3,
+	)
+
+	if not test_executions:
+		print("❌ NO TEST EXECUTIONS FOUND")
+	else:
+		print(f"✅ Found {len(test_executions)} Test Executions (showing first 3)")
+
+		for te in test_executions:
+			print(f"\n  Test: {te.name}")
+			print(f"    Test Period: {te.test_period or '❌ MISSING'}")
+			print(f"    Reviewer: {te.reviewer or '❌ MISSING'}")
+			print(f"    Review Date: {te.review_date or '❌ MISSING'}")
+
+			# Check evidence
+			evidence_count = frappe.db.count("Test Evidence", filters={"parent": te.name})
+			print(f"    Evidence Items: {evidence_count}")
+
+			if evidence_count > 0:
+				evidence = frappe.get_all(
+					"Test Evidence",
+					filters={"parent": te.name},
+					fields=["evidence_type", "description"],
+					limit=2,
+				)
+				for ev in evidence:
+					print(f"      - {ev.evidence_type}: {ev.description[:40]}...")
+
+	# Check Deficiencies
+	print("\n\n🔴 DEFICIENCIES:")
+	print("-" * 80)
+
+	deficiencies = frappe.get_all(
+		"Deficiency",
+		fields=["name", "control", "test_execution", "severity", "status"],
+		limit=3,
+	)
+
+	if not deficiencies:
+		print("❌ NO DEFICIENCIES FOUND")
+	else:
+		print(f"✅ Found {len(deficiencies)} Deficiencies (showing first 3)")
+
+		for d in deficiencies:
+			print(f"\n  Deficiency: {d.name}")
+			print(f"    Test Execution: {d.test_execution or '❌ MISSING'}")
+			print(f"    Severity: {d.severity}")
+			print(f"    Status: {d.status}")
+
+	# Summary
+	print("\n\n📊 SUMMARY:")
+	print("-" * 80)
+
+	total_te = frappe.db.count("Test Execution")
+	total_def = frappe.db.count("Deficiency")
+	total_evidence = frappe.db.count("Test Evidence")
+
+	print(f"Total Test Executions: {total_te}")
+	print(f"Total Deficiencies: {total_def}")
+	print(f"Total Evidence Items: {total_evidence}")
+
+	if total_te > 0:
+		avg_evidence = total_evidence / total_te
+		print(f"\nAverage evidence items per test: {avg_evidence:.1f}")
+		if avg_evidence == 0:
+			print("❌ NO EVIDENCE ITEMS IN ANY TEST EXECUTION")
+
+	print("\n" + "=" * 80)
+
+	return {
+		"total_test_executions": total_te,
+		"total_deficiencies": total_def,
+		"total_evidence": total_evidence,
+	}
+
+
 # Run directly from console
 if __name__ == "__main__":
 	setup_comprehensive_test_data()
