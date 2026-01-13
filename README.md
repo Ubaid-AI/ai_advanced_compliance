@@ -53,7 +53,7 @@ Transform compliance from a periodic checkbox exercise into a continuous, intell
 | App Version | Frappe Version | ERPNext Version | Branch | Status |
 |-------------|----------------|-----------------|--------|--------|
 | v1.x.x | v15.x | v15.x | `version-15` | ✅ Stable |
-| v2.0.0-beta | v16.x (beta) | v16.x (beta) | `version-16` | ✅ Stable |
+| v2.x.x | v16.x | v16.x | `version-16` | ✅ Stable |
 
 ### Installation by Version
 
